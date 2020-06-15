@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button>插入数据</button>
+  <script>
+    const button = document.querySelector('button')
+    console.log(button)
+    button.addEventListener('click', () => {
+      bigData()
+    })
+
+    function bigData() {
+  const ul = document.createElement("ul");
+  document.body.appendChild(ul);
+  const total = 100000;
+  const once = 20;
+  let index = 0;
+
+  function loop(curTotal,curIndex){
+    if(curTotal <= 0){
+        return false;
+    }
+    //每页多少条
+    let pageCount = Math.min(curTotal , once);
+    window.requestAnimationFrame(function(){
+      let fragment = document.createDocumentFragment();
+        for(let i = 0; i < pageCount; i++){
+          let li = document.createElement('li');
+          li.innerText = curIndex + i + ' : ' + ~~(Math.random() * total);
+          fragment.appendChild(li)
+        }
+        ul.appendChild(fragment)
+        loop(curTotal - pageCount,curIndex + pageCount)
+    })
+  }
+  loop(total,index);
+}
+
+
+
+  </script>
+</body>
+</html>
