@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    console.log("before css");
+    function h () {
+        console.log(document.querySelectorAll('h1'))
+      }
+      setTimeout(h, 0)
+  </script>
+  <link href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css" rel="stylesheet">
+  <style>
+    h1 {
+      color: red !important
+    }
+  </style>
+   
+</head>
+<body>
+  <h1>测试CSS阻塞加载</h1>
+<ul>
+  <li><b>css加载不会阻塞DOM树的解析</b> </li>
+  <li><b>css加载会阻塞DOM树的渲染</b></li>
+  <li><b>css加载会阻塞后面js语句的执行、而js加载会阻塞 dom 解析和渲染。所以如果JS 没有执行完DOM树就不会解析</b></li>
+
+</ul>
+</body>
+</html>
