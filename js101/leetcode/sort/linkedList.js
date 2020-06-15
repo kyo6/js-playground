@@ -119,10 +119,12 @@ let LinkedList2 = (function () {
 })();
 
 let list = new LinkedList2();
-for (let i = 0; i < 5; i += 1) {
-  list.append(i+1);
+const data = [1,2,6,3,4,5,6]
+for(v of data) {
+  list.append(v);
 }
-// list.print();
+
+list.print();
 
 
 function print(head) {
@@ -151,7 +153,8 @@ var reverseList = function (head) {
 
 var reverseBetween = function(head, m, n) {
   let count = n - m;
-  let p = dummyNode = new ListNode();
+  let dummy = new ListNode();
+  let p = dummy;
   let pre, cur, front, tail;
   p.next = head;
   for(let i = 0; i < m -1; i++) {
@@ -174,5 +177,30 @@ var reverseBetween = function(head, m, n) {
 // const reversed = reverseList(list.getHead())
 // print(reversed)
 
-const reversedBetween = reverseBetween(list.getHead(), 2, 4);
-print(reversedBetween)
+
+var removeVal = (head, val) => {
+ 
+  if(head === null) {
+    return head
+  }
+  if(head.val === val) {
+    head = head.next
+  }
+  let pre = null;
+  let cur = head;
+  while(cur && cur.value !== val) {
+    pre = cur;
+    cur = cur.next
+  }
+  if(cur) {
+    pre.next = cur.next
+  }
+  return head
+}
+
+
+
+// const reversedBetween = reverseBetween(list.getHead(), 2, 4);
+// print(reversedBetween)
+findVal(list.getHead(), 6)
+list.print()
