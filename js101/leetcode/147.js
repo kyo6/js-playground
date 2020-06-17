@@ -6,10 +6,12 @@ var insertionSortList = function(head) {
   while(head) {
     var cur = head;
     head = head.next;
+    // 当cur 小于 pre 时需要重新从堆头开始查找插入位置
     if(cur.val < pre.val) {
       pre = dummy;
     }
-    while(pre.next !== null && cur.val > pre.next.val){
+    // 寻找cur的插入位置
+    while(pre.next !== null && pre.next.val < cur.val){
       pre = pre.next;
     }
     cur.next = pre.next;
