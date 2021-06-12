@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .parent {
+	position: relative;
+	height:500px;
+	background:#f4AAB9;
+	z-index:0;
+  font-size: 14px;
+  font-family: Helvetica, sans-serif;
+}
+
+.box {
+	width: 200px;
+	height: 120px;
+	border: 2px solid #f4f4f4;
+	padding: 3px;
+}
+
+.relative {
+	/* position: relative; */
+	top:80px;
+	left:50px;
+	background: #ffcc66;
+}
+
+.absolute {
+	position: absolute;
+	z-index: -1;
+	top:30px;
+	left:30px;
+	background: #cc66ff;
+}
+
+.float {
+	float:left;
+	/* position: relative; */
+	top:30px;
+	left: 80px;
+	background:#dc7895;
+}
+
+.inline-block{
+	display: inline-block;
+	background: lightgreen;
+	/* position: relative; */
+	left:10px;
+	top: 10px;
+}
+
+
+
+.blue {
+	height: 150px;
+	background: #cc66ff;
+	z-index:1;
+}
+  </style>
+</head>
+<body>
+  <div class="parent">
+    background
+    <div class="relative box">块级元素</div>
+    <div class="absolute box">Zindex = -1</div>
+    <div class="inline-block box">inblock</div>
+    <div class="float box">float 元素</div>
+    <div class="float box">float 元素</div>
+    <div class="relative box">块级元素</div>
+    <h3>inline-block的元素会排在float 元素的后面</h3>
+    
+  </div>
+  
+</body>
+</html>

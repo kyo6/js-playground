@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    .table {
+      display: table;
+      table-layout: fixed;
+      text-align: left;
+      width: calc(100% - 30px);
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .td {
+      display: table-cell;
+      padding: 5px;
+    }
+
+    input[type="checkbox"] {
+      position: absolute;
+      clip: rect(0,0,0,0)
+    }
+
+    .check-in, .check-out {
+      color: #34538b;
+      cursor: pointer;
+    }
+
+    .check-out {
+      display: none;
+    }
+
+    :checked ~ .check-out {
+      display: inline-block;
+    }
+
+    :checked ~ .check-in {
+      display: none;
+    }
+
+    .element {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .25s;
+    }
+    :checked ~ .element {
+      max-height: 666px;
+    }
+    .explain {
+      max-width: 400px;
+      text-align: left;
+      margin: 30px auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="main">
+    <h1>max-height与任意高度元素滑动展开收起效果实例页面</h1>
+    <div class="show">
+      <h3>展示</h3>
+      <div class="demo">
+        <div class="table">
+          <div class="td">
+            <input id="check1" type="checkbox">
+            <p>个人觉得，display:table-cell最强的应用是可以任意个数列表的等宽效果。</p>
+            <div class="element">
+              <p>
+                display:table-cell其他一些应用，例如，两栏自适应布局，垂直居中效果等等都是可以通过其他技术手段模拟出来的，但是，根据列表个数自动等宽的效果，其他CSS是很难模拟的，尤其当需要兼容IE8浏览器的时候。
+              </p>
+            </div>
+            <label for="check1" class="check-in">更多↓</label>
+            <label for="check1" class="check-out">收起↑</label>
+          </div>
+          <div class="td">
+            <input id="check2" type="checkbox">
+            <p>个人觉得，display:table-cell最强的应用是可以任意个数列表的等宽效果。</p>
+            <div class="element">
+              <p>
+                display:table-cell其他一些应用，例如，两栏自适应布局，垂直居中效果等等都是可以通过其他技术手段模拟出来的，但是，根据列表个数自动等宽的效果，其他CSS是很难模拟的，尤其当需要兼容IE8浏览器的时候。
+              </p>
+              <p>然而，此方法也有局限性，就是只能实现单行列表的等分，所以，如果我们希望列表数目超过一定值的时候变成多行，就需要根据数目不同，输出不同的DOM结构，仅仅靠CSS有难度。</p>
+            </div>
+            <label for="check2" class="check-in">更多↓</label>
+            <label for="check2" class="check-out">收起↑</label>
+          </div>
+        </div>
+        <p class="explain">
+          但是，使用此方法也有一点要注意，即虽然说从适用范围讲，max-height值越大使用场景越多，但是，如果max-height值太大，在收起的时候可能会有“效果延迟”的问题，比方说，我们展开的元素高度是100像素，而max-height是1000像素，动画时间是250
+          ms，假设我们动画函数是线性的，则前225 ms我们是看不到收起效果的，因为max-height从1000像素到100像素变化这段时间，元素不会有区域被隐藏，会给人动画延迟225 ms的感觉，相信这不是你想看到的
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

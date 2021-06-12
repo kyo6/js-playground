@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      font-family: Helvetica, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    .container {
+      width: 600px;
+      margin: auto
+    }
+
+    .parent {
+      padding: 50px 16px;
+      position: relative;
+      height: 500px;
+      background: #f4AAB9;
+      z-index: 0;
+    }
+
+    .box {
+      width: 200px;
+      height: 120px;
+      border: 2px solid #f4f4f4;
+      padding: 3px;
+    }
+
+    .absolute {
+      position: absolute;
+    }
+
+    .son0 {
+      background: #ffcc66;
+      margin-left: 80px;
+      ;
+      margin-top: -50px;
+      padding-top: 80px;
+      box-sizing: border-box;
+    }
+
+    .son1 {
+      z-index: -1;
+      top: 10px;
+      left: 96px;
+      background: #cc66ff;
+    }
+
+    .float {
+      float: left;
+      top: 30px;
+      left: 80px;
+      background: #dc7895;
+    }
+
+    .inline-block {
+      display: inline-block;
+      background: lightgreen;
+      margin-left: -50px;
+      margin-top: 20px;
+    }
+
+    .dad,
+    .mom {
+      position: relative;
+      height: 100px;
+      margin-bottom: 20px;
+      background: rgba(0, 255, 255);
+    }
+
+    .mom {
+      z-index: 0;
+    }
+
+    .son {
+      width: 100px;
+      height: 105px;
+      background: lightgreen;
+      position: absolute;
+      z-index: -1;
+    }
+
+    .headline {
+      position: relative;
+      top: -155px;
+      margin-left: 12px;
+      background: aliceblue;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>ZIndex 知识整理</h1>
+    <div class="dad">
+      <div class="absolute">dad 是普通的盒子</div>
+      <div class="son"></div>
+    </div>
+    <div class="mom">
+      <div class="absolute">mom设置了z-index</div>
+      <div class="son"></div>
+    </div>
+    <p>
+      如下图所示，虽然 .dad 元素设置了 position: relative ，但是由于元素默认为 z-index: auto，并没有创建层叠上下文，此时其就是一个普通的块级盒子。所以设置了z-index:
+      -1的.son元素跑到了爸爸身后看不见了。
+    </p>
+    <p>
+      而由于.mom设置了z-index: 0，创建出了一个层叠上下文，所以.son元素就算设置了z-index: -1也跑不出老妈的视线。
+    </p>
+    <h3>层叠上下文中的顺序</h3>
+    <p>“层叠顺序”(stacking order)表示元素发生层叠时按照特定的顺序规则在Z轴上垂直显示。由此可见，前面所说的“层叠上下文”和“层叠等级”是一种概念，而这里的“层叠顺序”是一种规则。
+
+    </p>
+    <figure>
+      <img class="lazyload inited loaded"
+        data-src="https://user-gold-cdn.xitu.io/2018/8/30/1658910c5cb364b6?imageView2/0/w/1280/h/960/format/webp/ignore-error/1"
+        data-width="768" data-height="383"
+        src="https://user-gold-cdn.xitu.io/2018/8/30/1658910c5cb364b6?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+      <figcaption></figcaption>
+    </figure>
+    <div class="parent">
+      <div class="absolute box son1">Zindex = -1</div>
+      <div class="inline-block box green">inblock</div>
+      <div class="float box">float 元素</div>
+      <div class="box son0">块级元素</div>
+      <!-- <div class="float box">float 元素</div> -->
+      <h4 class="headline">background < 负值z-index < 块级盒子 < 浮动盒子 < 内联盒子 <br>
+          < z-index:auto < 正值z-index</h4> </div> </div> </body> </html>

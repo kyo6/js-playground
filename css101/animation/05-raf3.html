@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+     body {
+      font-family: Lato, sans-serif;
+    }
+
+    .box {
+      width: 30px;
+      height: 30px;
+      background-color: #000;
+    }
+
+    .moving {
+      animation: move 1s;
+    }
+
+    @keyframes move {
+      from {
+        transform: translateX(0px);
+      }
+
+      to {
+        transform: translateX(500px);
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Run an animation again</h1>
+  <div class="demo">
+    <div id="box" class="box"></div>
+    <br>
+    <button id="control">move</button>
+  </div>
+
+  <script>
+    const box = document.querySelector('.box');
+    const control = document.querySelector('#control')
+    control.addEventListener('click', play, false)
+    function play() {
+      box.className = 'box';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          box.className = "box moving";
+        })
+      })
+    }
+
+  </script>
+</body>
+</html>

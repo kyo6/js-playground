@@ -19,7 +19,7 @@ const deepTag = [mapTag, setTag, arrayTag, objectTag, argsTag];
 
 function isObject(target) {
   const type = typeof target;
-  return target !== null && (type === "object" || type === "function");
+  return target !== null && (type === "object");
 }
 
 function getType(target) {
@@ -74,15 +74,18 @@ function cloneReg(target) {
 function clone(target, map = new WeakMap()) {
   // 克隆原始类型
   if (!isObject(target)) {
+    // console.log('primitive:',target)
     return target;
   }
 
   // 初始化
   const type = getType(target);
+
   let cloneTarget;
   if (deepTag.includes(type)) {
     cloneTarget = getInit(target, type);
   } else {
+    // console.log('other', target, type);
     return cloneOtherType(target, type)
   }
 
@@ -135,6 +138,7 @@ const target = {
   [Symbol()]: 12345678,
   symbol: Symbol('123'),
   empty: null,
+  print:function(){},
   set: new Set().add("a").add("b"),
   map: new Map().set("age", 18).set("city", "sh"),
   age: 18,
@@ -143,7 +147,16 @@ const target = {
 };
 target.target = target;
 
-
+const testObj = {
+  symbol: Symbol("123"),
+  [Symbol()]: 12345678,
+  empty: null,
+  filed1: undefined,
+  print: function () {},
+  date: new Date(),
+};
+const res = clone(target)
+console.log(res);
 // const target = {
 //   filed1: 1,
 //   filed2: undefined,
@@ -159,8 +172,3 @@ target.target = target;
 //   date: new Date()
 // };
 // target.target = target;
-
-let a = Symbol(12345)
-
-let c1 = cloneSymbol(a);
-console.log(c1);

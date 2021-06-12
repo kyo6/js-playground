@@ -213,3 +213,12 @@ let p2 = p1.then(() => {
   return p2
 })
 */
+
+/**
+ 1. 如何改变Promise 的状态
+    1.resolve(value): 如果当前是pending 就会变为resolved
+    2.reject(value): 如果当前是pending 就会变为rejected
+    3.抛出异常
+  2.当一个promise指定多个成功或者失败回调函数时，它们都会调用
+  3.
+ */

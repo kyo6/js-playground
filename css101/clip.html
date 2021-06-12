@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clip</title>
+  <link rel="stylesheet" href="assets/css/normalize.css">
+  <style>
+    .dotted-border {
+      border: dotted;
+      position: relative;
+      width: 536px;
+      height: 350px;
+    }
+
+    #top-left,
+    #middle,
+    #bottom-right {
+      position: absolute;
+      top: 0;
+    }
+
+    #top-left {
+      left: 360px;
+      clip: rect(0 175px 113px 0);
+    }
+
+
+    #middle {
+      left: 280px;
+      clip: rect(119px 255px 229px 80px);
+    }
+
+    #bottom-right {
+      left: 200px;
+      clip: rect(235px 335px 345px 160px);
+    }
+
+  </style>
+</head>
+
+<body>
+  <p class="dotted-border">
+    <img src="https://developer.mozilla.org/@api/deki/files/3613/=hut.jpg" title="Original graphic">
+    <img id="top-left" src="https://developer.mozilla.org/@api/deki/files/3613/=hut.jpg"
+      title="Graphic clipped to upper left">
+    <img id="middle" src="https://developer.mozilla.org/@api/deki/files/3613/=hut.jpg"
+      title="Graphic clipped towards middle">
+    <img id="bottom-right" src="https://developer.mozilla.org/@api/deki/files/3613/=hut.jpg"
+      title="Graphic clipped to bottom right">
+  </p>
+</body>
+
+</html>

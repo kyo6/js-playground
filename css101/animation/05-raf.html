@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .line {
+      width: 500px;
+      height: 2px;
+      background-color: black;
+    }
+
+    .absolute  .box {
+      position: absolute;
+      left: 0;
+    }
+    .box {
+      width: 100px;
+      height: 100px;
+      margin-top: 30px;
+    }
+    .box1 {
+      background-color: gold;
+    }
+    .box2 {
+      background-color: lightcoral;
+    }
+    .box3 {
+      background-color: cornflowerblue;
+    }
+    .absolute .box1 {
+      top:30px;
+    }
+    .absoulte .box2 {
+      top:160px;
+    }
+    .absoulte .box3 {
+      top: 290px;
+    }
+  </style>
+</head>
+<body>
+  <div class="line"></div>
+  <div class="absolute">
+     <div class="box box1"></div>
+     <div class="box box2"></div>
+     <div class="box box3"></div>
+  </div>
+ 
+  <script src="./lib/animate.js"></script>
+  <script>
+    const oBox1 = document.querySelector('.box1')
+    const oBox2 = document.querySelector('.box2')
+    const oBox3 = document.querySelector('.box3')
+
+    const updatePosition = el => percent => {
+      el.style.left = 500 * percent + 'px'
+    }
+
+    const transformPosition = el => precent => {
+     el.style.transform = `translateX(${precent*500}px)`
+    }
+
+    new Animator()
+    .duration(3000)
+    .easing(k => k * k)
+    .on('update', updatePosition(oBox1))
+    .on('complete', () => {})
+    .animate()
+
+    new Animator()
+    .duration(3000)
+    .easing(k => (1 - --k * k * k * k))
+    .on('update', updatePosition(oBox2))
+    .on('complete', () => {})
+    .animate()
+
+    new Animator()
+    .duration(3000)
+    .easing(k => 1 - Math.sqrt(1 - k * k))
+    .on('update', updatePosition(oBox3))
+    .on('complete', () => {})
+    .animate()
+  </script>
+</body>
+</html>

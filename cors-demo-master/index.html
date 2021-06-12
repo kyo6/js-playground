@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+
+<body>
+
+  <section id="auth">
+    <h1>HTTP Basic AuthenticationS</h1>
+    <button class="send">Send</button>
+    <button class="logout">Logout</button>
+  </section>
+
+  <section id="no-ACAO">
+    <h1>Fails if Access-Control-Allow-Origin Not Set</h1>
+    <button>Click to Send XHR</button>
+  </section>
+
+  <section id="wildcard-ACAO">
+    <h1>Success if Access-Control-Allow-Origin Set to Wildcard</h1>
+    <button>Click to Send XHR</button>
+  </section>
+
+  <section id="non-simple-request">
+    <h1>Non-Simple Request</h1>
+    <button>Click to Send XHR</button>
+  </section>
+
+  <section id="non-simple-post-request">
+    <h1>Non-Simple Post Request</h1>
+    <button>Click to Send XHR</button>
+  </section>
+
+  <section id="wildcard-ACAO-with-credentials">
+    <h1>Fails to Send Cookie when Access-Control-Allow-Origin set to Wildcard</h1>
+    <button>Click to Send XHR</button>
+  </section>
+  <section id="no-ACAC-with-credentials">
+    <h1>Fails when Access-Control-Allow-Credentials Not Set</h1>
+    <button>Click to send XHR</button>
+  </section>
+
+  <section id="specific-ACAO-with-credentials">
+    <h1>Success to Send Cookie when Access-Control-Allow-Origin set specificly</h1>
+    <button>Click to Send XHR</button>
+  </section>
+
+  <section id="redirect-simple-req">
+    <h1>Redirect Simple Request </h1>
+    <button>Click to Send XHR</button>
+  </section>
+
+  <section id="redirect-simple-req-twice">
+    <h1>Redirect Simple Request Twice</h1>
+    <button>Click to Send XHR</button>
+  </section>
+
+  <section id="redirect-non-simple-req">
+    <h1>Redirect Non-Simple Request </h1>
+    <button>Click to Send XHR</button>
+  </section>
+
+  <script>
+    click("#auth button.send", function(){
+     var xhr=createXHR('http://localhost:4001/Authentication_base')
+     xhr.send(); 
+    })
+
+    click("#auth button.logout", function(){
+     var xhr=createXHR('http://localhost:4001/Authentication_base_logout')
+     xhr.send(); 
+    })
+
+    click('#no-ACAO button', function() {
+      console.log('SENDING XHR: no Access-Control-Allow-Origin set, your browser may show you an error');
+      var xhr = createXHR('http://localhost:4002/access-control-allow-origin-not-set');
+      xhr.send();
+    });
+
+    click('#wildcard-ACAO button', function() {
+      console.log('SENDING XHR: Access-Control-Allow-Origin set to *, it should be a success');
+      var xhr = createXHR('http://localhost:4002/access-control-allow-origin-wildcard');
+      xhr.send();
+    });
+
+    click('#non-simple-request', function() {
+      console.log('SENDING XHR: custom header x-foo set, which makes the request non-simple, you\'ll see an additional OPTIONS request in the Network panel');
+      var xhr = createXHR('http://localhost:4002/access-control-allow-origin-wildcard');
+      xhr.setRequestHeader('x-foo', 'bar');
+      xhr.send();
+    });
+
+    click('#non-simple-post-request', function() {
+      console.log('SENDING XHR: custom header x-foo set, which makes the request non-simple, you\'ll see an additional OPTIONS request in the Network panel');
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://localhost:4002/post')
+      xhr.setRequestHeader('x-foo', 'bar');
+      xhr.setRequestHeader('content-type','application/json');
+      xhr.setRequestHeader('Accept','application/json, text/plain, */*')
+      xhr.send(JSON.stringify({a:1, b:2}));
+    });
+
+    click('#redirect-simple-req button', function() {
+      console.log('SENDING XHR: this simple request will be redirected, and should be successful');
+      var xhr = createXHR('http://localhost:4002/redirect');
+      xhr.send();
+    });
+
+    click('#redirect-simple-req-twice', function() {
+      console.log('SENDING XHR: this simple request will be redirected twice, and should be successful');
+      var xhr = createXHR('http://localhost:4002/redirect-to-redirect');
+      xhr.send();
+    });
+
+    click('#redirect-non-simple-req', function() {
+      console.log('SENDING XHR: this non simple request will be redirected (respond with 302), thus should be failed');
+      var xhr = createXHR('http://localhost:4002/redirect');
+      xhr.setRequestHeader('x-foo', 'bar');
+      xhr.send();
+    });
+
+    click('#wildcard-ACAO-with-credentials button', function() {
+      console.log('SENDING XHR: Access-Control-Allow-Origin set to *, which is not acceptable for your browser');
+      document.cookie = 'author=harttle';
+      var xhr = createXHR('http://localhost:4002/wildcard-allow-origin-with-credentials');
+      xhr.withCredentials = true;
+      xhr.send();
+    });
+
+    click('#no-ACAC-with-credentials button', function() {
+      console.log('SENDING XHR: Access-Control-Allow-Credentials not set, it shall fail');
+      document.cookie = 'author=harttle';
+      var xhr = createXHR('http://localhost:4002/allow-credentials-not-set');
+      xhr.withCredentials = true;
+      xhr.send();
+    });
+
+    click('#specific-ACAO-with-credentials button', function() {
+      console.log('SENDING XHR: Access-Control-Allow-Credentials set, and Access-Control-Allow-Origin set to localhost:4001, it should be a sucess');
+      document.cookie = 'author=harttle';
+      console.log('cookie `author=harttle` set, sending xhr...');
+
+      var xhr = createXHR('http://localhost:4002/specific-allow-origin-with-credentials');
+      xhr.withCredentials = true;
+      xhr.send();
+
+      console.log('Historically, cookies for a given host are shared across all the ports on that host, See: https://stackoverflow.com/questions/1612177/are-http-cookies-port-specific');
+    });
+
+
+    function click(sel, func) {
+      var el = document.querySelector(sel);
+      el.addEventListener('click', func);
+    }
+
+    function createXHR(url) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', url);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState != 4) return;
+        console.log('SERVER RESPONSE:', xhr.status, xhr.responseText);
+      };
+      return xhr;
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    *,*::after,*::before {
+      box-sizing: border-box;
+    }
+    h1 {
+      line-height: 1.35;
+    }
+    .Checkout__Content {
+      max-width: 56.25em;
+      margin-left: auto;
+      margin-right: auto;
+      padding-bottom: 1.5rem;
+    }
+
+    .progress-bar--cart {
+      display: flex;
+      flex:1;
+      flex-direction: row;
+    }
+
+    .progress-bar__stage {
+      flex: 1;
+      position: relative;
+      font-size: 1.125em;
+      color: #8b8b8b;
+      cursor: pointer;
+      margin: 0;
+      padding: .5rem 1rem;
+      background-color: #fff;
+      text-align: center;
+      border: 1px solid #dedede;
+
+    }
+
+    .progress-bar__stage:first-child {
+      border-top-left-radius: .125em;
+      border-bottom-left-radius: .125em;
+    }
+
+    .progress-bar__stage.disabled {
+      cursor: default;
+      color: rgba(139, 139, 139, 0.5);
+    }
+
+    .progress-bar__stage:not(:first-child) {
+      padding-left: 2em;
+    }
+
+    
+    .progress-bar__stage:nth-child(2) {
+      z-index: 2;
+    }
+
+    .progress-bar__stage:nth-child(3) {
+      z-index: 1;
+    }
+
+    .progress-bar__stage:first-child {
+      border-top: 1px solid #dedede;
+    }
+  
+
+    .progress-bar__stage:nth-child(1) {
+      z-index: 3;
+    }
+
+
+    .progress-bar__stage.active {
+      font-weight: 700;
+      color: #fff;
+      background-color: #009aff;
+      border-color: #009aff;
+    }
+
+
+
+    .progress-bar__stage:not(:last-child):before {
+      border-color: transparent;
+      border-left-color: #dedede;
+      border-width: 1em;
+      margin-top: -1em;
+    }
+
+    .progress-bar__stage:not(:last-child):after {
+    border-color: transparent;
+    border-left-color: #fff;
+    border-width: .9375em;
+    margin-top: -.9375em;
+}
+
+    .progress-bar__stage:not(:last-child):before,
+    .progress-bar__stage:not(:last-child):after {
+      content: '';
+      width: 0;
+      height: 0;
+      border: solid transparent;
+      border-width: 20px 0 20px 20px;
+      position: absolute;
+      left: 100%;
+      top: 51%;
+      pointer-events: none;
+      font-size: 1.25em;
+    }
+
+
+
+    .progress-bar__stage.active:after,
+    .progress-bar__stage.active:before {
+      border-left-color: #009aff !important;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="Checkout__Content">
+    <header class="Checkout__Header">
+      <div class="progress-bar--cart">
+        <h1 class="progress-bar__stage ">Review</h1>
+        <h1 class="progress-bar__stage active ">Checkout</h1>
+        <h1 class="progress-bar__stage ">Settings &amp; Download</h1>
+      </div>
+    </header>
+    <div class="CheckoutStage--Free">
+      <h3 class="CheckoutStage__Message">Your Purchase is Free!</h3>
+      <div class="cart-purchase-form">
+        <section>
+          <section class="StageSection--Session">
+            <h5 class="StageSection__Header">Create Account</h5>
+            <div class="StageSection__Content--Session">
+              <div>
+                <div class="control-group email-address"><label class="control-group__label">Email Address</label>
+                  <div class="control-group__control"><input class="control-group__input" name="email-address"
+                      placeholder="Your email" id="tfid-0-0" value=""></div>
+                </div>
+                <div class="control-group checkbox">
+                  <div class="control-group__control"><label class="control-group__label"><input
+                        class="control-group__input" type="checkbox" id="terms-acceptance" value="true"><span>I accept
+                        the Leanpub <a rel="noopener noreferrer" target="_blank" href="/terms" class="link">Terms of
+                          Service</a> and
+                        &nbsp;<a rel="noopener noreferrer" target="_blank" href="/privacy" class="link">Privacy
+                          Policy</a>.</span></label></div>
+                </div>
+              </div>
+              <aside>
+                <p class="fine-print">In order to complete your purchase you must enter a valid email address. If you
+                  already have an account for this email address, this will prompt you to sign in. If you're new here,
+                  we will create a new Leanpub account for you with this email address. You can pick a password and
+                  change your settings after completing your purchase.</p>
+              </aside>
+            </div>
+          </section>
+        </section>
+        <div class="cart-purchase-form-recaptcha">
+          <div>
+            <p class="hint">This site is protected by reCAPTCHA and the Google&nbsp;<a rel="noopener noreferrer"
+                target="_blank" href="https://policies.google.com/privacy">Privacy Policy</a> and&nbsp;<a
+                rel="noopener noreferrer" target="_blank" href="https://policies.google.com/terms">Terms of Service</a>
+              apply.</p>
+            <div id="g-recaptcha" data-verifycallbackname="verifyCallback"></div>
+          </div>
+        </div>
+      </div>
+      <section class="Stage__Actions">
+        <div class="StageAction--Back">
+          <p>You can <a>go back and edit your cart</a>.</p>
+        </div><button class="StageAction--Continue btn--solid">Continue</button>
+      </section>
+    </div>
+  </div>
+</body>
+
+</html>

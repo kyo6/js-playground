@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navigation </title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    .constr {
+      margin: 0 auto;
+      width:240px;
+      text-align: left;
+    }
+    .nav {
+      background-color: #cd0000;
+    }
+    .nav-a {
+      display: block;
+      color: #fff;
+      margin: 0 10px;
+      padding: 9px 10px;
+      border-bottom: 1px solid #b70000;
+      border-top: 1px solid #de3636;
+    }
+
+    .nav-a:first-child {
+      border-top: 0;
+    }
+
+    .nav-a + .nav-a + .nav-a {
+      border-bottom: 0;
+    }
+
+    .w100 {
+      width: 100%;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="main">
+    <h1>“外部尺寸”block元素的流动性示意实例页面</h1>
+    <div class="show">
+      <h3>展示</h3>
+      <div class="demo">
+        <div class="constr">
+        <h4>无宽度，借助流动性</h4>
+        <div class="nav">
+          <a href="" class="nav-a">导航一</a>
+          <a href="" class="nav-a">导航一</a>
+          <a href="" class="nav-a">导航一</a>
+        </div>
+        <h4>width:100%</h4>
+        <div class="nav">
+          <a href="" class="nav-a w100">导航一</a>
+          <a href="" class="nav-a w100">导航一</a>
+          <a href="" class="nav-a w100">导航一</a>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

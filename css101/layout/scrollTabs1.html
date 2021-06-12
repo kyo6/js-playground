@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+  <style>
+    .tabs--container {
+      margin: 0 auto;
+    }
+
+    .tabs {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .tabs--scrollable {
+      position: relative;
+      display: flex;
+      top: 1px;
+      flex-direction: row;
+    }
+
+    .tabs__toggle-group {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      flex-grow: 1;
+      flex-shrink: 1;
+      z-index: 1;
+      overflow-x: hidden;
+    }
+
+    .tabs__toggle {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .tabs__toggle {
+      margin: 0 2px;
+      padding: 10px 24px;
+      color: #0195e7;
+      text-align: center;
+      background: #eee;
+      border-right: 1px solid #eee;
+      border-left: 1px solid #eee;
+      border-bottom: 1px solid #e4e4e4;
+    }
+
+    .tabs__toggle:hover {
+      color: #58595b;
+    }
+
+    .tabs__toggle--active {
+      color: #58595b;
+      background: #fff;
+      border-right: 1px solid #e4e4e4;
+      border-left: 1px solid #e4e4e4;
+      border-bottom-color: transparent;
+    }
+
+    .tabs__toggle--active::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -1px;
+      left: -1px;
+      height: 4px;
+      background-color: #0195e7;
+    }
+
+    .tabs__tabs-group {
+      border: 1px solid #e4e4e4;
+    }
+
+    .tabs__tab {
+      width: 100%;
+      padding: 24px;
+    }
+
+    .tabs__left {
+      position: absolute;
+      left: 0;
+      opacity: 0.5;
+    }
+
+    .tabs__left::before {
+      content: '<';
+      background: #0195e7;
+      color: #fff;
+      width: 30px;
+      display: inline-block;
+    }
+
+    .tabs__left--active {
+      opacity: 1;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="tabs--container">
+    <div class="tabs">
+      <div class="tabs--scrollable">
+        <button class="tabs__scroller tabs__scroller--left js-action--scroll-left">
+          <i class="fa fa-chevron-left"></i>
+        </button>
+        <div class="tabs__toggle-group">
+          <div class="tabs__toggle tabs__toggle--active">Tab Option 1</div>
+          <div class="tabs__toggle">Tab Option 2</div>
+          <div class="tabs__toggle">Tab Option 3 with really long text</div>
+          <div class="tabs__toggle">Tab Option 4</div>
+          <div class="tabs__toggle">Tab Option 5</div>
+          <div class="tabs__toggle">Tab Option 6</div>
+          <div class="tabs__toggle">Tab Option 7</div>
+          <div class="tabs__toggle">Tab Option 8</div>
+          <div class="tabs__toggle">Tab Option 9</div>
+          <div class="tabs__toggle">Tab Option 10</div>
+        </div>
+        <button class="tabs__scroller tabs__scroller--right js-action--scroll-right">
+          <i class="fa fa-chevron-right"></i>
+        </button>
+      </div>
+      <div class="tabs__tabs-group">
+        <div class="tabs__tab">Tab 1 Content</div>
+        <div class="tabs__tab">Tab 2 Content</div>
+        <div class="tabs__tab">Tab 3 Content</div>
+        <div class="tabs__tab">Tab 4 Content</div>
+        <div class="tabs__tab">Tab 5 Content</div>
+        <div class="tabs__tab">Tab 6 Content</div>
+        <div class="tabs__tab">Tab 7 Content</div>
+        <div class="tabs__tab">Tab 8 Content</div>
+        <div class="tabs__tab">Tab 9 Content</div>
+        <div class="tabs__tab">Tab 10 Content</div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/js/jquery.min.js"></script>
+  <script>
+    var $tabs = $(".tabs__toggle");
+    var $tabContents = $(".tabs__tab");
+    var $activeTab = $(".tabs__toggle--active");
+
+    var btnScrollLeft = document.querySelector('.js-action--scroll-left');
+    var btnScrollRight = document.querySelector('.js-action--scroll-right');
+    var tabsContainer = document.querySelector('.tabs__toggle-group');
+    var tabs = document.querySelectorAll('.tabs__toggle');
+
+    var selectedTabIndex = 0;
+    var scrollIndex = 0;
+    var scrollLeft = 0;
+    var tabsContainerWidth = tabsContainer.clientWidth;
+    var tabsScrollableWidth = tabsContainer.scrollWidth;
+
+    console.log("Container Width:", tabsContainerWidth, "Tabs Width:", tabsScrollableWidth);
+
+    $tabContents
+      .hide()
+      .eq($tabs.index($activeTab))
+      .show();
+    
+    btnScrollLeft.addEventListener('click', function() {
+      $(".tabs__toggle--active").prev('.tabs__toggle').trigger('click')
+      // smoothScroll(tabsContainer, {to: scrollLeft, callback: checkScrollButtonState});
+    })
+
+    btnScrollRight.addEventListener('click', function() {
+      $(".tabs__toggle--active").next('.tabs__toggle').trigger('click')
+    })
+
+    $tabs.on("click", function () {
+      var $activeTab = $(".tabs__toggle--active");
+      var $tab = $(this);
+      var tabIndex = $tabs.index($tab);
+      selectedTabIndex = tabIndex;
+      scrollIndex = tabIndex;
+      console.log("Selected Tab:", selectedTabIndex);
+
+      $tab.addClass("tabs__toggle--active");
+      $activeTab.removeClass("tabs__toggle--active");
+
+      $tabContents
+        .hide()
+        .eq(tabIndex)
+        .show();
+
+      var position = $tab.position();
+      var scroll = $(tabsContainer).scrollLeft();
+      console.log(position, scroll)
+      $(tabsContainer).animate({
+        scrollLeft: scroll+position.left-30
+      },200)
+
+      // var tab = $tab[0];
+      // var tabWidth = tab.clientWidth;
+      // var tabLeft = tab.offsetLeft;
+      // var tabRight = tabLeft + tabWidth;
+      // console.log(tabLeft, tabsContainer.scrollLeft)
+      // if (tabLeft < tabsContainer.scrollLeft) {
+      //   smoothScroll(tabsContainer, {
+      //     to: tabLeft,
+      //     callback: checkScrollButtonState
+      //   });
+      // }
+
+      // if (tabRight > (tabsContainer.scrollLeft + tabsContainerWidth)) {
+      //   smoothScroll(tabsContainer, {
+      //     to: (tabRight - tabsContainerWidth), 
+      //     callback: checkScrollButtonState
+      //   });
+      // }
+    })
+
+    function checkScrollButtonState() {
+      console.log("scrollLeft:", tabsContainer.scrollLeft, "clientWidth:", tabsContainer.clientWidth, "scrollWidth:",
+      tabsContainer.scrollWidth);
+
+      if (tabsContainer.scrollLeft <= 0) { btnScrollLeft.setAttribute("disabled", true); } else {
+        btnScrollLeft.removeAttribute("disabled"); } if (tabsContainer.scrollLeft + tabsContainer.clientWidth>=
+        tabsContainer.scrollWidth) {
+        btnScrollRight.setAttribute("disabled", true);
+      } else {
+        btnScrollRight.removeAttribute("disabled");
+      }
+    }
+
+    function smoothScroll(element, options) {
+
+      var defaults = {
+        to: 0,
+        duration: 250,
+        axis: "horizontal",
+        easing: "easeInOutQuad"
+      };
+
+      var settings = Object.assign({}, defaults, options);
+
+      var direction = settings.axis === "horizontal" ? "scrollLeft" : "scrollTop";
+
+      var start = element[direction],
+        change = settings.to - start,
+        animationStart = +new Date();
+      var animating = true;
+      var lastpos = null;
+
+      var animateScroll = function () {
+        if (!animating) {
+          if (settings.callback) {
+            settings.callback();
+          }
+          return;
+        }
+        requestAnimationFrame(animateScroll);
+        var now = +new Date();
+        var val = Math.floor(Easing[settings.easing](now - animationStart, start, change, settings.duration));
+        if (lastpos) {
+          if (lastpos === element[direction]) {
+            lastpos = val;
+            element[direction] = val;
+          } else {
+            animating = false;
+          }
+        } else {
+          lastpos = val;
+          element[direction] = val;
+        }
+        if (now > animationStart + settings.duration) {
+          element[direction] = settings.to;
+          animating = false;
+        }
+      };
+      requestAnimationFrame(animateScroll);
+
+    };
+
+    var Easing = {
+      // no easing, no acceleration
+      linear: function (t, b, c, d) {
+        return c * t / d + b;
+      },
+
+      // accelerating from zero velocity
+      easeInQuad: function (t, b, c, d) {
+        t /= d;
+        return c * t * t + b;
+      },
+
+
+      // acceleration until halfway, then deceleration
+      easeInOutQuad: function (t, b, c, d) {
+        t /= d / 2;
+        if (t < 1) return c / 2 * t * t + b;
+        t--;
+        return -c / 2 * (t * (t - 2) - 1) + b;
+      },
+      // accelerating from zero velocity
+      easeInCubic: function (t, b, c, d) {
+        t /= d;
+        return c * t * t * t + b;
+      },
+
+      // decelerating to zero velocity
+      easeOutQuart: function (t, b, c, d) {
+        t /= d;
+        t--;
+        return -c * (t * t * t * t - 1) + b;
+      },
+
+      // acceleration until halfway, then deceleration
+      easeInOutQuart: function (t, b, c, d) {
+        t /= d / 2;
+        if (t < 1) return c / 2 * t * t * t * t + b;
+        t -= 2;
+        return -c / 2 * (t * t * t * t - 2) + b;
+      },
+
+
+    }
+
+  </script>
+
+
+</body>
+
+</html>

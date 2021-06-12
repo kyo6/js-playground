@@ -1,6 +1,6 @@
 function insertSort(arr) {
   let a = [...arr];
-  for(let i = 0; i < a.length; i++) {
+  for(let i = 1; i < a.length; i++) {
     let temp = a[i];
     let j = i -1;
     while(j >= 0 && a[j] > temp) {

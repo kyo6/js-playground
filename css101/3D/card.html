@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      margin: 0;
+      font-family: Helvetica, Arial, sans-serif;
+      background-color: #666;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: nowrap;
+      color: rgba(0, 0, 0, .8);
+      overflow-x: scroll;
+    }
+    body.scroll-x{
+      justify-content: flex-start;
+    }
+    .card-container{
+      flex-shrink: 0;
+      width: 320px;
+      height:420px;
+      background-color: #fff;
+      margin: 0 1.5rem;
+    }
+    .card-container:nth-child(1) .card-title{
+      background-color: #429aff;
+    }
+    .card-container:nth-child(2) .card-title{
+      background-color:#ef558e;
+    }
+    .card-container:nth-child(3) .card-title{
+      background-color: #98dc30;
+    }
+    .card-container:nth-child(4) .card-title{
+      background-color: orange;
+    }
+    .card-title{
+      line-height: 120px;
+      color:#fff;
+      font-size: 3rem;
+      text-align: center;
+    }
+   
+    .card-content {
+      padding: 2em 1em;
+    }
+
+    .card-actions {
+      display: flex;
+      padding: 0.5rem 1rem;
+    }
+
+    .card-actions button {
+      color: #000;
+      font-weight: 700;
+      border: 2px solid currentColor;
+      padding: 0.625em 1em;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  
+    <div class="card-container">
+      <div class="card-title">Slide One</div>
+      <div class="card-content">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus, consequatur. At voluptate sed quasi natus ad, quidem totam maxime similique, adipisci voluptas deserunt ducimus dicta quibusdam pariatur deleniti atque illo!
+      </div>
+      <div class="card-actions">
+        <button>Read More</button>
+      </div>
+    </div>
+    <div class="card-container">
+      <div class="card-title">Slide Two</div>
+      <div class="card-content">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus, consequatur. At voluptate sed quasi natus ad, quidem totam maxime similique, adipisci voluptas deserunt ducimus dicta quibusdam pariatur deleniti atque illo!
+      </div>
+      <div class="card-actions">
+        <button>Read More</button>
+      </div>
+    </div>
+    <div class="card-container">
+      <div class="card-title">Slide Three</div>
+      <div class="card-content">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus, consequatur. At voluptate sed quasi natus ad, quidem totam maxime similique, adipisci voluptas deserunt ducimus dicta quibusdam pariatur deleniti atque illo!
+      </div>
+      <div class="card-actions">
+        <button>Read More</button>
+      </div>
+    </div>
+    <div class="card-container">
+      <div class="card-title">Slide Four</div>
+      <div class="card-content">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus, consequatur. At voluptate sed quasi natus ad, quidem totam maxime similique, adipisci voluptas deserunt ducimus dicta quibusdam pariatur deleniti atque illo!
+      </div>
+      <div class="card-actions">
+        <button>Read More</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    const observerDocumentScroll = () => {
+      console.log(document.body.offsetWidth, document.body.scrollWidth)
+      const {offsetWidth, scrollWidth} = document.body;
+      if(scrollWidth > offsetWidth) {
+        document.body.classList.add('scroll-x')
+      } else {
+        document.body.classList.remove('scroll-x')
+      }
+    }
+    window.addEventListener('load', () => {
+      observerDocumentScroll();
+    })
+
+    window.addEventListener('resize', () => {
+      observerDocumentScroll();
+    }) 
+  </script>
+</body>
+</html>

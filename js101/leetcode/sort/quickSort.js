@@ -2,8 +2,8 @@ function quickSort(arr, left, right) {
   //print(arr)          //这个left和right代表分区后“新数组”的区间下标，因为这里没有新开数组，所以需要left/right来确认新数组的位置
   if (left < right) {
       let pos = left - 1                      //pos即“被置换的位置”，第一趟为-1
-      for(let i = left; i <= right; i++) {    //循环遍历数组，置换元素
-          let pivot = arr[right]              //选取数组最后一位作为基准数，
+      let pivot = arr[right]                  //选取数组最后一位作为基准数，
+      for(let i = left; i <= right; i++) {    //循环遍历数组，置换元素      
           if(arr[i] <= pivot) {               //若小于等于基准数，pos++，并置换元素, 这里使用小于等于而不是小于, 其实是为了避免因为重复数据而进入死循环
               pos++;
               //交换两个元素的位置
@@ -21,21 +21,21 @@ function print(arr = []) {
   console.log(arr.join(','))
 }
 
+var arr3 = [28, 4, 47, 84, 12, 47, 88, 63]
+quickSort(arr3, 0, arr3.length-1);
+// 其中以63为基准进行比较
+// 第一趟快速排序的过程，84是大于63的元素，pos为84的索引3： 28， 4，47，【84，12】进行交换， 28，4，47，12，84 47，88，63
+// 交换完成后84是大于63的元素，pos为84的索引4， 28， 4，47，12，【84，47】进行交换，28，4，47，12，47，84，88，63
+// 交换完成后84是大于63的元素，pos为84的索引5， 28， 4，47，12，47，【84，63】进行交换，28，4，47，12，47，63，88，84
+// 交换完成后pos的位置就是63的索引， pos之前都是小于它的元素，pos之后都是大于它的元素
+
 function print1(arr = [], start, end) {
   if(start < end) {
     const a = arr.slice(start, end);
     console.log(a.join(',')) 
   }
 }
-var arr = [2, 5, 3, 1, 10, 4]
-var start = 0;
-var end = arr.length - 1;
-//quickSort(arr, start, end)
 
-var arr1 = [1,1,1,1,1,1];
-var arr2 = [3,44,38,5,47,15,36,26,27,2,46,4,19,50,48]
-var arr3 = [28,4,47,84,12,47,88,63]
-// quickSort(arr2, start, end)
 
 // 从左往右排
 function quickSort1(arr, left, right) {
@@ -57,13 +57,14 @@ function quickSort1(arr, left, right) {
   return arr;
 }
 
-function partition(arr, beg, end) {
-  if(beg === end) {
-    return beg;
+function partition(arr, left, right) {
+  if(left === right) {
+    return left;
   }
-  let left = beg, right = end;
-  const pivot = arr[beg];
-  while(left < right) {
+  let pos = left;
+  const pivot = arr[pos];
+  while (left < right) {
+    // 因为返回的是left，所以这里应该先执行right--，这样left就不会越界了；
     while(arr[right] >= pivot && left < right){
       right--;
     }
@@ -72,8 +73,8 @@ function partition(arr, beg, end) {
     }
     [arr[left], arr[right]] = [arr[right], arr[left]]
   }
-  [arr[beg], arr[left]] = [arr[left], arr[beg]]
-  // console.log(arr);
+  [arr[pos], arr[left]] = [arr[left], arr[pos]]
+  console.log(arr);
   return left; 
 }
 
@@ -82,7 +83,7 @@ function partitionPlus(arr, L, R) {
    let p = arr[L];
    // 左区间的初始值: L
    let lt = L;
-   // 右区间的初始值: R
+   // 右区间的初始值: R+1
    let gt = R + 1;
   for(let i = L + 1; i < gt;) {
     if(arr[i] === p) {
@@ -90,7 +91,7 @@ function partitionPlus(arr, L, R) {
     } else if(arr[i] > p) {
       [arr[gt-1 ],arr[i]] = [arr[i],arr[gt-1]];
       gt--;
-    }else {
+    } else {
       [arr[lt + 1],arr[i]] = [arr[i],arr[lt + 1]];
       lt++;
       i++;
@@ -101,22 +102,48 @@ function partitionPlus(arr, L, R) {
   [arr[L],arr[lt]] = [arr[lt],arr[L]];
   lt--;
   console.log(`三路快排后的数组: ${arr}`);
-  return {lt : lt, gt : gt};
-} 
-const dataArr = [3,5,8,1,2,9,4,7,6];
-console.log(partitionPlus(dataArr,0,dataArr.length - 1));
-
-
-const threeWayFastRow = function (arr,L,R) {
-  // 当前数组的起始位置大于等于数组的末尾位置时退出递归
-  if(L >= R){
-      return false;
-  }
-  let obj = partition(arr, L, R);
-  // 递归执行: 将没有大于p,和小于p区间的元素在进行三路快排
-  threeWayFastRow(arr,L,obj.lt);
-  threeWayFastRow(arr,obj.gt,R);
+  return {lt, gt};
 }
+
+function partition3(arr, L, R) {
+  let p = arr[L];
+  let lt = L;
+  let gt = R;
+  let i = L + 1;
+  while (i <= gt) {
+    if (arr[i] < p) {
+      [arr[lt + 1], arr[i]] = [arr[i], arr[lt + 1]];
+      lt++;
+      i++;
+    } else if (arr[i] > p) {
+      [arr[gt], arr[i]] = [arr[i], arr[gt]];
+      gt--;
+    } else {
+      i++;
+    }
+    // console.log(lt, gt, arr)
+  }
+  [arr[lt], arr[L]] = [arr[L], arr[lt]];
+  //console.log(`三路快排后的数组: ${arr}`);
+  //console.log({lt, gt})
+  return { lt, gt };
+}
+
+// console.log(partitionPlus(dataArr,0,dataArr.length - 1));
+
+
+function threeWayFastRow(arr, L, R) {
+  console.log(L, R);
+  // 当前数组的起始位置大于等于数组的末尾位置时退出递归
+  if (L >= R) {
+    return false;
+  }
+  let obj = partition3(arr, L, R);
+  console.log(obj, arr);
+  // 递归执行: 将没有大于p,和小于p区间的元素在进行三路快排
+  //threeWayFastRow(arr,L,obj.lt);
+  //threeWayFastRow(arr,obj.gt,R);
+};
 
 function quickSort2(arr, left, right) {
   if(left >= right) {
@@ -127,7 +154,7 @@ function quickSort2(arr, left, right) {
   quickSort2(arr, pos+1, right)
 }
 
-quickSort2(arr3, 0, arr3.length-1)
+//quickSort2(arr3, 0, arr3.length-1)
 
 function mergeSort(arr) {
   if(Array.isArray(arr) && arr.length <= 1) return arr;
@@ -156,3 +183,15 @@ function merge(left, right) {
 }
 
 //mergeSort(arr2)
+
+
+var arr = [3, 1, 2, 5, 6, 4];
+var arr1 = [1,1,1,1,1,1];
+var arr2 = [3,44,38,5,47,15,36,26,27,2,46,4,19,50,48]
+var arr3 = [28, 4, 47, 84, 12, 47, 88, 63]
+const dataArr = [2, 2, 3, 1, 2, 3, 2, 3, 3];
+// quickSort(arr2, start, end)
+partition(arr, 0, arr.length - 1);
+// partition3([2,3,1,4,2,5], 0, 5)
+// partition3([2, 2, 3, 1, 2, 3, 2, 3, 3], 0, 8);
+// threeWayFastRow([3, 2, 1, 1, 1, 2, 2, 4, 6, 3, 3, 2], 0, 11);

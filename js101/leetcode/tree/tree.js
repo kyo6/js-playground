@@ -2,9 +2,6 @@ function Node(data, left, right) {
   this.left = left;
   this.right = right;
   this.val = data;
-  this.show = () => {
-    return this.val;
-  };
 }
 
 function insert(data) {
@@ -83,6 +80,17 @@ function deleteNode(root, key) {
   root.right = deleteMinNode(root.right)
   return root;
 };
+
+function getDepth(root) {
+  if (root==null) {
+    return 0;
+  }
+  let left = getDepth(root.left);
+  let right = getDepth(root.right);
+  return Math.max(left, right) + 1;
+};
+
+
 class BST {
   constructor() {
     this.root = null; //初始化,root为null
@@ -210,13 +218,9 @@ function inOrder(node) {
   let nodes = [];
   const pushNode = node => {
     if(node) {
-      if(node.left) {
-        pushNode(node.left)
-      }
+      pushNodes(node.left);
       nodes.push(node.val);
-      if(node.right) {
-        pushNode(node.right)
-      }
+      pushNodes(node.right);
     }
   } 
   pushNode(node)
@@ -336,19 +340,46 @@ function breadthTraversal1(node) {
   console.log(ans);
 }
 
-
-var searchBST = function(root, val) {
-  while(root !== null) {
-    if(root.val === val) {
-      return root
-    } else if(root.val < val) {
-      root = root.right
+function listToTree(arr) {
+  let root = null;
+  let result = null;
+  let queue = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (i === 0) {
+      root = new Node(arr[i]);
+      result = root;
+      queue.push(root);
+    }
+    if (queue.length) {
+      root = queue.shift();
     } else {
-      root = root.left
+      break;
+    }
+    if (i + 1 < arr.length && arr[i+1] !== null) {
+      root.left = new Node(arr[i + 1]);
+      queue.push(root.left);
+    }
+    if (i + 2 < arr.length && arr[i + 2] !== null) {
+      root.right = new Node(arr[i + 2]);
+      queue.push(root.right);
+    }
+    i = i + 1;
+  }
+  return result
+}
+
+function searchBST(root, val) {
+  while (root !== null) {
+    if (root.val === val) {
+      return root;
+    } else if (root.val < val) {
+      root = root.right;
+    } else {
+      root = root.left;
     }
   }
-  return null
-};
+  return null;
+}
 
 var bst = new BST();
 bst.insert(56);
@@ -365,4 +396,9 @@ bst.insert(92);
 // inOrder(bst.root);
 // postOrder(bst.root);
 // breadthTraversal1(bst.root)
-searchBST(bst.root, 92)
+// searchBST(bst.root, 92)
+
+var tree = listToTree([3, 9, 20, null, null, 15, 7]);
+// console.log(tree1);
+// breadthTraversal(tree);
+console.log(getDepth(tree))

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .a,
+    .b {
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      transition: transform 1s;
+      font-size: 90px;
+      line-height: 90px;
+      text-align: center;
+      color: #fff;
+      font-family: sans-serif;
+    }
+
+    .a {
+      z-index: 1;
+      background: red;
+      left: 30px;
+      top: 110px;
+    }
+
+    .b {
+      z-index: 2;
+      background: blue;
+    }
+
+    .a::before {
+      content: 'A';
+    }
+
+    .b::before {
+      content: 'B';
+    }
+
+    .animate .a {
+      transform: translateX(100px);
+    }
+
+    button {
+      position: relative;
+      top: 210px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="a"></div>
+  <div class="b"></div>
+  <button onclick="document.body.classList.toggle('animate')">Play</button>
+</body>
+
+</html>

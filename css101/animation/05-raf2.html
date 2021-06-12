@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      font-family: Roboto, sans-serif;
+    }
+    .box {
+      width: 30px;
+      height: 30px;
+      background-color: #000;
+    }
+
+  </style>
+</head>
+
+<body>
+  <h1>Move box From 800 to 300</h1>
+  <div id="box" class="box"></div>
+
+  <button id="control">move</button>
+
+  <script>
+    const boxEle = document.querySelector('#box');
+    const control = document.querySelector('#control')
+
+    control.addEventListener('click', move, false)
+
+    function move() {
+      boxEle.style.transform = "translateX(800px)";
+      window.requestAnimationFrame(function (time) {
+        window.requestAnimationFrame(function (time) {
+          boxEle.style.transition = "transform 1s ease-in-out";
+          boxEle.style.transform = "translateX(300px)";
+        });
+      });
+    }
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    .container {
+      width: 280px;
+      margin: 0 auto;
+      padding: 40px 0;
+      background-color: #f0f3f9;
+      animation: width 2s infinite alternate;
+    }
+
+    .textarea {
+      padding: 9px 8px;
+      border: 1px solid #d0d0d5;
+      border-radius: 4px;
+      background-color: #fff;
+    }
+
+    .textarea>textarea {
+      width: 100%;
+      line-height: 20px;
+      padding: 0;
+      border: 0 none;
+      outline: 0 none;
+      background: none;
+      resize: none;
+    }
+
+    @keyframes width {
+      from {
+        width: 200px
+      };
+
+      to {
+        width: 280px
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <h1>&lt;textarea&gt;宽度100%自适应效果实例页面</h1>
+    <div class="show">
+      <h3>展示</h3>
+      <div class="demo">
+        <div class="container">
+          <div class="textarea">
+            <textarea rows="5" placeholder="色块是容器"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

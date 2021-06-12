@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <style>
+    .container {
+      width: 200px;
+      height: 200px;
+      position: relative;
+      /* background-color: #fafafa; */
+    }
+
+    .container div {
+      width: 40%;
+      height: 40%;
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    img {
+      width:100%;
+      max-width: 300px;
+    }
+
+    .intro .container div:nth-child(2) {
+      transform: translate(150%);
+    }
+
+    .intro .container div:nth-child(3) {
+    transform: translate(150%, 150%);
+    }
+
+    .intro .container div:nth-child(4) {
+    transform: translate(0, 150%);
+    }
+
+
+    .demo .container div {
+      animation: loading 2s ease infinite;
+    }
+
+    .container div:nth-child(1) {
+      background-color: #C299FC;
+      animation-delay: 0;
+    }
+
+    .container div:nth-child(2) {
+      background-color: #FFD739;
+      animation-delay: -0.5s;
+    }
+
+    .container div:nth-child(3) {
+      background-color: #9852F9;
+      animation-delay: -1s;
+    }
+
+    .container div:nth-child(4) {
+      background-color: #6807F9;
+      animation-delay: -1.5s;
+    }
+
+
+    @keyframes loading {
+      0%,
+      100% {
+        transform: translate(0, 0);
+      }
+
+      25% {
+        transform: translate(150%, 0);
+      }
+
+      50% {
+        transform: translate(150%, 150%);
+      }
+
+      75% {
+        transform: translate(0, 150%);
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="intro center">
+    <div class="intro-container">
+      <h1>CSS 加载动画</h1>
+      <div>
+        <img src="../assets/images/animate.png" alt="" srcset="">
+      </div>
+      
+      <h3>知识点</h3>
+      <ul>
+        <li>animation-delay:负值会让元素提前运动</li>
+        <li>transform中的百分之是相对元素自身的宽高的</li>
+      </ul>
+      <h3>代码</h3>
+      <pre>
+.container div {
+  animation: loading 2s ease infinite;
+}
+
+.container div:nth-child(2) {
+  animation-delay: -0.5s;
+}
+
+.container div:nth-child(3) { 
+  animation-delay: -1s;
+}
+
+.container div:nth-child(4) {
+  animation-delay: -1.5s;
+}
+
+@keyframes loading {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(150%, 0);
+  }
+
+  50% {
+    transform: translate(150%, 150%);
+  }
+
+  75% {
+    transform: translate(0, 150%);
+  }
+}
+      </pre>
+    </div>
+  </div>
+  <div class="demo center">
+    <div class="container">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+
+
+
+</body>
+
+</html>

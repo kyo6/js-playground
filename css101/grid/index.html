@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>grid Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section id="sidebar">
+    <div class="header">
+      <div>
+        <h1 class="title">CSS Garden</h1>
+      </div>
+    </div>
+    <p id="instructions">
+      <p>If you want to count grid lines from the right instead of the left, you can give <code
+          class="help">grid-column-start</code> and <code class="help">grid-column-end</code> negative values. For
+        example, you can set it to -1 to specify the first grid line from the right.</p>
+      <p>Try setting <code class="help">grid-column-end</code> to a negative value.</p>
+    </p>
+    <div id="editor">
+      <div id="css">
+        <div class="line-numbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14</div>
+        <pre id="before">
+#garden {
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  grid-template-rows: 20% 20% 20% 20% 20%;
+}
+
+#water {
+  grid-column-start: 1;
+</pre><textarea id="code" autofocus="" autocapitalize="none" style="height: 24px;"></textarea>
+      <pre id="after">}</pre>
+      <button id="next" class="translate disabled">Next</button>
+      </div>
+    </div>
+  </section>
+  <section id="view">
+    <div id="board">
+      <div id="overlay">
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+      </div>
+      <div id="plants">
+        <div class="plant carrot grid-column-start-1" style="grid-column-end: -2;">
+          <div class="bg"></div>
+        </div>
+      </div>
+      <div id="garden">
+        <div class="treatment carrot grid-column-start-1">
+          <div class="bg"></div>
+        </div>
+      </div>
+      <div id="soil">
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+        <span class="plot"></span>
+      </div>
+    </div>
+  </section>
+  <script src="../assets/js/jquery.min.js"></script>
+  <script src="./index.js"></script>
+</body>
+</html>

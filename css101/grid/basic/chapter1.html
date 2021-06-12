@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 16px;
+      padding: 0 16px;
+    }
+
+    .wrapper {
+      padding: 10px;
+      font: 2em Sansita, sans-serif;
+      background-color: #f0f0f0;
+      border: 2px solid pink;
+      border-radius: 2px;
+    }
+
+    .flex {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    .item {
+      border: 5px solid rgb(214, 129, 137);
+      border-radius: 5px;
+      margin: 10px;
+      padding: 10px 20px;
+      background-color: rgb(233, 78, 119);
+      color: #fff;
+    }
+
+    .flex .item {
+      flex: 1 1 200px;
+    }
+
+    .col {
+      padding: 10px;
+      border: 5px solid rgb(212, 212, 212);
+      border-radius: 5px;
+      padding: 10px;
+      background-color: rgb(233, 78, 119);
+      color: #fff;
+    }
+
+    .float-grid .col {
+      width: 6.20%;
+      float: left;
+      margin-bottom: 1em;
+      margin-left: 2.093333%;
+      background-color: rgb(63, 148, 245);
+    }
+
+    .float-grid .row::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+
+    .flex-grid .row {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    
+    .flex-grid .col {
+       margin-bottom: 1em;
+       margin-left: 2.093333%;
+       width: 6.20%;
+       flex: 0 0 auto;
+       background-color: rgb(245, 233, 63);
+    }
+
+    .col.span2 {
+    width: calc((6.20%*2) + 2.093333%);
+    }
+
+    .col.span3 {
+    width: calc((6.20%*3) + (2.093333%*2));
+    }
+
+    .col.span4 {
+    width: calc((6.20%*4) + (2.093333%*3));
+    }
+    .grid-wrapper {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0,1fr));
+      grid-gap: 20px;
+      margin: 0 20px ;
+    }
+    .grid-wrapper .col {
+      background-color: rgb(89, 255, 153);
+    }
+    .grid-wrapper .col.span2 {
+     grid-column: auto / span 2;
+    }
+
+    .grid-wrapper .col.span3 {
+     grid-column: auto / span 3;
+    }
+
+   .grid-wrapper .col.span4 {
+     grid-column: auto / span 4;
+    }
+
+    .grid-wrapper .col.rowspan2 {
+    grid-row: auto / span 2;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <h1>Grid VS Flex</h1>
+    <div class="show">
+      <h3>展示</h3>
+      <div class="demo">
+        <div class="container">
+          <div class="wrapper">
+            <h3>Flex 布局</h3>
+            <div class="flex">
+              <div class="item">1</div>
+              <div class="item">2</div>
+              <div class="item">3</div>
+              <div class="item">4</div>
+              <div class="item">5</div>
+              <div class="item">6</div>
+              <div class="item">7</div>
+              <div class="item">8</div>
+              <div class="item">9</div>
+            </div>
+          </div>
+          <div class="wrapper">
+            <h3>Grid 布局</h3>
+            <div class="grid">
+              <div class="item">1</div>
+              <div class="item">2</div>
+              <div class="item">3</div>
+              <div class="item">4</div>
+              <div class="item">5</div>
+              <div class="item">6</div>
+              <div class="item">7</div>
+              <div class="item">8</div>
+              <div class="item">9</div>
+            </div>
+          </div>
+        </div>
+        <p class="explain">第二个示例使用CSS Grid实现相同的布局，但是，你可以看到，最后一行中的项目始终保持在它们的列中。这是因为在网格中，我们将项目排列成行和列 —— 二维布局。</p>
+      </div>
+      <h3>浮动网格布局</h3>
+      <div class="demo">
+        <div class="float-grid">
+          <div class="row">
+            <div class="col">1</div>
+            <div class="col">2</div>
+            <div class="col">3</div>
+            <div class="col">4</div>
+            <div class="col">5</div>
+            <div class="col">6</div>
+            <div class="col">7</div>
+            <div class="col">8</div>
+            <div class="col">9</div>
+            <div class="col">10</div>
+            <div class="col">11</div>
+            <div class="col">12</div>
+          </div>
+          <div class="row">
+            <div class="col span1">span1</div>
+            <div class="col span2">span2</div>
+            <div class="col span3">span3</div>
+            <div class="col span4">span4</div>
+          </div>
+        </div>
+      </div>
+      <h3>Flexbox 网格布局</h3>
+      <div class="demo">
+        <div class="flex-grid">
+          <div class="row">
+            <div class="col">1</div>
+            <div class="col">2</div>
+            <div class="col">3</div>
+            <div class="col">4</div>
+            <div class="col">5</div>
+            <div class="col">6</div>
+            <div class="col">7</div>
+            <div class="col">8</div>
+            <div class="col">9</div>
+            <div class="col">10</div>
+            <div class="col">11</div>
+            <div class="col">12</div>
+          </div>
+          <div class="row">
+            <div class="col span1">span1</div>
+            <div class="col span2">span2</div>
+            <div class="col span3">span3</div>
+            <div class="col span4">span4</div>
+          </div>
+        </div>
+      </div>
+      <h3>Grid 网格</h3>
+      <div class="demo">
+        <div class="grid-wrapper">
+          <div class="col">1</div>
+          <div class="col">2</div>
+          <div class="col">3</div>
+          <div class="col">4</div>
+          <div class="col">5</div>
+          <div class="col">6</div>
+          <div class="col">7</div>
+          <div class="col">8</div>
+          <div class="col">9</div>
+          <div class="col">10</div>
+          <div class="col">11</div>
+          <div class="col rowspan2">12</div>
+          <div class="col span1">span1</div>
+          <div class="col span2">span2</div>
+          <div class="col span3">span3</div>
+          <div class="col span4">span4</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

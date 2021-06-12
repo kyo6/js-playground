@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+    background-color: gray;
+    }
+    * {
+    box-sizing: border-box;
+    }
+    .contentWrapper {
+    width: 350px;
+    margin: 0 auto;
+    position: relative;
+    }
+    .tabsWrapper {
+    width: 100%;
+    height: 24px;
+    overflow: hidden;
+    position: relative;
+    }
+    .tabs {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    bottom: -25px;
+    left: 0;
+    right: 0;
+    white-space: nowrap;
+    overflow: auto;
+    }
+    .tabs li {
+    display: inline-block;
+    background-color: #ccc;
+    padding: 3px 8px;
+    cursor: pointer;
+    }
+    .tabs li.active {
+    background-color: white;
+    }
+    .next, .previous {
+    position: absolute;
+    padding: 2px 4px;
+    top: 0;
+    background-color: white;
+    }
+    .next {
+    right: -25px;
+    }
+    .previous {
+    left: -25px;
+    }
+    .tabContent {
+    width: 100%;
+    background-color: white;
+    padding: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="contentWrapper">
+    <div class="tabsWrapper">
+      <ul class="tabs">
+        <li data-id="contentOne" class="active">CSS</li>
+        <li data-id="contentTwo">HTML, HTML, HTML</li>
+        <li data-id="contentThree">JS and jQuery</li>
+        <li data-id="contentFour">one more tab</li>
+        <li data-id="contentFive">another tab</li>
+        <li data-id="contentSix">the last tab</li>
+      </ul>
+    </div> <span class="next">&gt;</span>
+    <span class="previous">&lt;</span>
+
+    <div class="tabContent">
+      <div class="contentOne">
+        <p>this is the CSS tab Content</p> <a href="">next</a>
+
+      </div>
+      <div class="contentTwo">
+        <p>this is the HTML tab Content
+          <br>
+          <br>1</p> <a href="">next</a>
+
+      </div>
+      <div class="contentThree">
+        <p>this is the JS tab Content</p> <a href="">next</a>
+
+      </div>
+      <div class="contentFour">
+        <p>this is the sample Content</p> <a href="">next</a>
+
+      </div>
+      <div class="contentFive">
+        <p>this is more sample Content</p> <a href="">next</a>
+
+      </div>
+      <div class="contentSix">
+        <p>this is more than more sample Content</p> <a href="">next</a>
+
+      </div>
+    </div>
+  </div>
+  <script src="../assets/js/jquery.min.js"></script>
+  <script>
+    // hide all contents accept from the first div
+    $('.tabContent div:not(:first)').toggle();
+
+    // hide the previous button
+    $('.previous').hide();
+
+    $('.tabs li').click(function () {
+      if ($(this).is(':last-child')) {
+        $('.next').hide();
+      } else {
+        $('.next').show();
+      }
+
+      if ($(this).is(':first-child')) {
+        $('.previous').hide();
+      } else {
+        $('.previous').show();
+      }
+
+      var position = $(this).position();
+      var corresponding = $(this).data("id");
+
+      // scroll to clicked tab with a little gap left to show previous tabs
+      scroll = $('.tabs').scrollLeft();
+      $('.tabs').animate({
+        'scrollLeft': scroll + position.left - 30
+      }, 200);
+
+      // hide all content divs
+      $('.tabContent div').hide();
+
+      // show content of corresponding tab
+      $('div.' + corresponding).toggle();
+
+      // remove active class from currently not active tabs
+      $('.tabs li').removeClass('active');
+
+      // add active class to clicked tab
+      $(this).addClass('active');
+    });
+
+    $('div a').click(function (e) {
+      e.preventDefault();
+      $('li.active').next('li').trigger('click');
+    });
+    $('.next').click(function (e) {
+      e.preventDefault();
+      $('li.active').next('li').trigger('click');
+    });
+    $('.previous').click(function (e) {
+      e.preventDefault();
+      $('li.active').prev('li').trigger('click');
+    });
+
+  </script>
+</body>
+
+</html>

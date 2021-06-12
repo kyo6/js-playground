@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+      background: #ddd;
+      color: #7a7b7c;
+      font-family: "Raleway", "Microsoft JhengHei", Arial, sans-serif;
+    }
+    .profile {
+      width: 330px;
+      height: 100px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 5px;
+      background-color: #fafafa;
+      box-shadow: 0 0 2rem #babbbc;
+      animation: show-profile 0.5s forwards ease-in-out;
+    }
+    .profile .photo, .profile .content {
+      box-sizing: border-box;
+    }
+    .profile .photo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 5px solid #fafafa;
+      background-color: #fafafa;
+      margin-left: -50px;
+      box-shadow: 0 0 0.5rem #babbbc;
+      animation: rotate-photo 0.5s forwards ease-in-out;
+    }
+    .profile .photo img {
+      width: 100%;
+    }
+    .profile .content {
+      padding: 10px;
+      overflow: hidden;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+    .profile .content::before {
+      content: "";
+      position: absolute;
+      width: 230px;
+      height: 150px;
+      background-color: #e9f3e6;
+      left: 0;
+      top: -20px;
+      z-index: -1;
+      transform: rotate(-8deg);
+    }
+    @keyframes show-profile {
+      0% {width: 0;}
+    }
+    @keyframes rotate-photo {
+      100% {
+        transform: rotate(-360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="profile">
+    <div class="photo"><img
+        src="http://2.bp.blogspot.com/-8FpnW826Jcs/XiLtTpornQI/AAAAAAAAAwY/aN8KsAjSP-EqLRdGiU8_MtUelja7DZgpwCK4BGAYYCw/s320/Jatin3.jpeg" />
+    </div>
+    <div class="content">
+      <div class="text">
+        <h3>Jatin Rao</h3>
+        <h6>Front-End Web Developer</h6>
+      </div>
+      <div class="btn"><span></span></div>
+    </div>
+    <div class="box"><i class="fa fa-facebook"></i><i class="fa fa-twitter"></i><i class="fa fa-github"></i><i
+        class="fa fa-instagram"></i><i class="fa fa-linkedin"></i></div>
+  </div>
+</body>
+</html>

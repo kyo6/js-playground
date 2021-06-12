@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>插入排序</title>
+  <style>
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #box {
+      position: relative;
+      height: 250px;
+      margin: 80px;
+    }
+
+    .bar {
+      position: absolute;
+      width: 30px;
+      bottom: 0;
+      display: inline-block;
+      background-color: pink;
+      text-align: center;
+      transition: all .2s;
+    }
+
+    .bar.active {
+      background-color: #ea6060;
+    }
+
+    .bar.compare {
+      background-color: #67e688
+    }
+
+  </style>
+</head>
+
+<body>
+  <h1>插入排序</h1>
+  <div>
+    <button id="startBtn">开始</button>
+    <button id="pauseBtn">暂停</button>
+  </div>
+  <div id="box">
+  </div>
+  <script>
+    function waitTime(time) { //等待函数
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve()
+        }, time);
+      })
+    }
+
+    function Bar(parent, height, left) {
+      this.dom = null;
+      this.parent = parent;
+      this.height = height;
+      this.bottom = 0;
+      this.left = left;
+      this.createElement();
+    }
+    Bar.prototype = {
+      createElement: function () {
+        const ele = document.createElement('div');
+        ele.classList.add('bar')
+        ele.style.height = this.height + "%";
+        ele.style.left = this.left;
+        ele.innerHTML = `<span>${this.height}</span>`
+        this.parent.appendChild(ele);
+        this.dom = ele;
+        return this;
+      },
+
+      addClass: function (name) { //添加样式类
+        this.dom.classList.add(name);
+        return this
+      },
+
+      removeClass: function (name) { //移除样式类
+        this.dom.classList.remove(name);
+        return this
+      },
+
+      move: function (position, pixel) {
+        this.dom.style[position] = pixel;
+        this[position] = pixel;
+        return this
+      }
+    }
+
+    function Sort(arr) {
+      this.arr = arr;
+      this.points = [];
+      this.initial();
+      this.isRun = false;
+    }
+
+    Sort.prototype.initial = function () {
+      var container = document.getElementById('box');
+      for (let index = 0; index < this.arr.length; index++) {
+        let ele = new Bar(container, this.arr[index], index * 50 + 'px');
+        this.points.push(ele)
+      }
+    }
+    Sort.prototype.start = function() {
+      this.isRun = true;
+    }
+    Sort.prototype.pause = function() {
+      this.isRun = false;
+    }
+    Sort.prototype.changeStyle = function (n, name) {
+      for (let l = 0; l < this.points.length; l++) {
+        //删除样式类 
+        this.points[l].removeClass(name)
+      }
+      this.points[n].addClass(name)
+    }
+
+    Sort.prototype.changePosition = function (n, position, px) {
+      const bar = this.points[n];
+      let dis = parseInt(bar[position].replace('px', ''))
+      bar.move(position, dis + px + 'px')
+    }
+
+    Sort.prototype.swapDom = function (i, j) {
+      return new Promise(resolve => {
+        this.changePosition(j, 'left', 50)
+        this.changeStyle(j, 'compare')
+        this.changePosition(i, 'left', -50)
+        this.changeStyle(i, 'active')
+        this.arr[j + 1] = this.arr[j]
+        resolve()
+      })
+    }
+
+    Sort.prototype.compare = function (i) {
+      return new Promise(async (resolve, reject) => {
+        let j = i - 1;
+
+        function* genNextFunc (temp) {
+          while (this.arr[j] > temp && j >= 0) {
+            yield this.swapDom(i, j);
+            j--;
+          }
+          return;
+        }
+
+        const compareNext = genNextFunc.bind(this)
+
+        const setCurrent = () => {
+          this.changeStyle(i, 'active')
+          this.changeStyle(i - 1, 'compare')
+          this.points[i].move('bottom', '-250px')
+        }
+        
+        setCurrent();
+        await waitTime(1000);
+        let temp = this.arr[i];
+
+        let compareItems = getNextCompare()
+
+        for await (item of compareNext(temp)) {
+          await waitTime(1000);
+        }
+        this.points[i].move('bottom', '0')
+        setTimeout(() => {
+          for (let p = i; p > j + 1; p--) { //动画完成后再进行dom数组的位置重排
+            [this.points[p], this.points[p - 1]] = [this.points[p - 1], this.points[p]]
+          }
+          this.arr[j + 1] = temp;
+          resolve(i + 1)
+        }, 1000)
+      })
+    }
+
+    function* genNext(sort) {
+      for (let i = 1; i < sort.arr.length; i++) { 
+        yield sort.compare(i) 
+      } 
+      return; 
+    }
+
+    const array = [75, 55, 83, 33, 94, 49, 40, 28, 42, 37, 68];
+    const sort = new Sort(array);
+    let isRun = false;
+    let startBtn = document.querySelector('#startBtn');
+    let pauseBtn = document.querySelector('#pauseBtn');
+    let gen = genNext(sort);
+
+    startBtn.addEventListener('click', function(){
+      this.disabled = true;
+      pauseBtn.disabled = false;
+      startWithPause().then(() => {
+       for (let l = 0; l < sort.arr.length; l++) { 
+         sort.points[l].removeClass('active');
+         sort.points[l].removeClass('compare');
+         this.disabled = true;
+         pauseBtn.disabled = true;
+        }
+      })
+    })
+
+    pauseBtn.addEventListener('click', function(){
+      this.disabled = true;
+      startBtn.disabled = false;
+      pause();
+    })
+  
+    async function start() {
+      return new Promise(async (resolve) => {
+        isRun = true;
+        sort.start();
+        for await (const item of genNext(sort)) {
+          console.log(item)
+        }
+        resolve()
+      })
+    }
+
+    function startWithPause() {
+      isRun = true;
+      sort.start();
+      return new Promise((resolve, reject) => {
+        function step(key, args) {
+          let genResult;
+          try {
+            genResult = gen[key](args);
+          } catch (err) {
+            console.log(err)
+          }
+          const {value,done} = genResult;
+          console.log(value, done)
+          if (done) {
+            return resolve(value)
+          } else {
+            if(!isRun) {
+              return Promise.reject(new Error('pause'))
+            }
+            return Promise.resolve(value).then(val => {
+              step('next', val)
+            })
+          }
+        }
+        step('next');
+      })
+    }
+
+    function pause() {
+      if(isRun) {
+        isRun = false
+        sort.pause()
+      } 
+    }
+
+  </script>
+</body>
+
+</html>

@@ -2,8 +2,8 @@ const obj = {
   name:'Alex'
 }
 
-function foo() {
-  console.log(this.name)
+function foo(age) {
+  console.log(this.name+' '+age)
 }
 
 var name = "apple"
@@ -17,4 +17,4 @@ Function.prototype.myCall = function (obj, ...args) {
   return result
 }
 
-foo.myCall()
+foo.myCall(obj,18)

@@ -1,18 +1,12 @@
 // sum(1,2,3,4..n)转化为 sum(1)(2)(3)(4)…(n)
-function curry(fn) {
-  var c = (...arg) => 
-  fn.length === arg.length ? fn(...arg) : (...arg1) => c(...arg, ...arg1);
-  return c;
-
-
-//   var c = (...arg) => (fn.length === arg.length) ?
-//           fn (...arg) : (...arg1) => c(...arg, ...arg1)
-// return c
+function curry(fn, ...args) {
+  if (args.length >= fn.length) {
+    return fn(...args);
+  }
+  return (...args1) => curry(fn, ...args, ...args1);
 }
-
 function sum(a,b,c) {
-
-  console.log(a + b + c) 
+ return a + b + c
 }
 
 const add = curry(sum)(1)(2)(3);

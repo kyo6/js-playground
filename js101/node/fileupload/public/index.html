@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      line-height: 1.7;
+    }
+
+    .section-fluid-main {
+      position: relative;
+      width: calc(100% - 40px);
+      padding-right: 15px;
+      padding-left: 15px;
+      margin-right: auto;
+      margin-left: auto;
+      max-width: 1100px;
+      padding-top: 50px;
+      padding-bottom: 90px;
+    }
+
+    .section-row {
+      display: flex;
+      flex-wrap: wrap;
+      margin-right: -15px;
+      margin-left: -15px;
+      justify-content: center;
+    }
+
+    .section-col-1 {
+      flex: 0 0 100%;
+      max-width: 100%;
+      padding: 15px;
+    }
+
+    [type="radio"]:checked,
+    [type="radio"]:not(:checked) {
+      position: absolute;
+      visibility: hidden;
+    }
+
+    .goal-btn:checked+label,
+    .goal-btn:not(:checked)+label {
+      margin: 5px 6px;
+      padding: 12px 20px;
+      border-radius: 4px;
+      background-color: #101e54;
+      color: #ffeba7;
+      cursor: pointer;
+      transition: all 250ms linear;
+    }
+
+    .goal-btn:checked+label {
+      background-color: #ffeba7;
+      color: #101e54;
+    }
+
+    .goal-content {
+      display: none;
+    }
+
+    #goal-1:checked~.section-col-1 .goal-1-content {
+      display: block;
+    }
+
+    #goal-2:checked~.section-col-1 .goal-2-content {
+      display: block;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="section-fluid-main">
+    <div class="section-row">
+      <input class="goal-btn" type="radio" id="goal-1" name="goal-btn" checked />
+      <label for="goal-1">Axios 取消请求</label>
+      <input class="goal-btn" type="radio" id="goal-2" name="goal-btn" />
+      <label for="goal-2">文件上传测试</label>
+      <input class="goal-btn" type="radio" id="goal-3" name="goal-btn" />
+      <label for="goal-3">Goal 3</label>
+      <input class="goal-btn" type="radio" id="goal-4" name="goal-btn" />
+      <label for="goal-4">Goal 4</label>
+      <input class="goal-btn" type="radio" id="goal-5" name="goal-btn" />
+      <label for="goal-5">Goal 5</label>
+      <div class="section-col-1">
+        <section class="goal-content goal-1-content">
+          <h3>axios 取消请求测试</h3>
+          <div>
+            <button id="product1">获取 product1</button>
+            <button id="product2">获取 product2</button>
+            <button id="notFound">获取不存在</button>
+            <button id="cancelRequest">取消</button>
+          </div>
+        </section>
+        <section class="goal-content goal-2-content">
+          <h3>文件上传测试</h3>
+          <input type="file" name="file" id="uploadFile">
+          <button onclick="upload(0)">上传</button>
+        </section>
+      </div>
+    </div>
+  </div>
+  <script src="axios.min.js"></script>
+  <script>
+    const CancelToken = axios.CancelToken;
+    let cancel;
+
+    function isFunction(fn) {
+      return typeof fn === 'function'
+    }
+
+    // 添加请求拦截器
+    axios.interceptors.request.use(function(config) {
+      // 在发请求前取消未完成的请求
+      if(isFunction(cancel)) {
+        cancel('取消请求');
+      }
+      // 添加一个 cancelToken 配置
+      config.cancelToken = new CancelToken(c => {
+        // 保存取消函数，用于之后可能取消当前请求
+        cancel = c
+      })
+      return config
+    })
+
+    // 添加响应拦截器
+    axios.interceptors.response.use(function(response) {
+      cancel = null
+      return response
+    }, function(error) {
+      if(axios.isCancel(error)) {
+        console.log('请求取消的错误', error.message)
+        return new Promise(() => {})
+      } else {
+        cancel = null;
+        return Promise.reject(error)
+      }
+    })
+
+    function fetchNotFound() {
+      axios.get('/data').then(res => {
+        console.log(res.data)
+      }, error => {
+        console.log('请求失败了',error.message)
+      })
+    }
+
+    function fetchProduct1() {
+      axios.get('/data1').then(res => {
+        console.log(res.data)
+      }, error => {
+        console.log('请求1失败了',error.message)
+      })
+    }
+
+    function fetchProduct2() {
+      axios.get('/data2').then(res => {
+        console.log(res.data)
+      }, error => {
+        console.log('请求2失败了',error.message)
+      })
+    }
+
+    function cancelFetch() {
+      if(typeof cancel === 'function') {
+        cancel('请求取消')
+      } else {
+        console.log('没有可以取消的请求')
+      }
+    }
+
+    function axiosTest() {
+      let buttons = document.querySelectorAll('.goal-1-content button');
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          switch (button.id) {
+            case 'product1': {
+              fetchProduct1();
+              break;
+            }
+            case 'product2': {
+              fetchProduct2();
+              break;
+            }
+            case 'notFound': {
+              return fetchNotFound();
+            }
+            case 'cancelRequest': {
+             return cancelFetch()
+            }
+            default: {
+              console.log(button.id)
+            }
+          }
+        })
+      })
+    }
+
+    function fileUpload() {
+      let btnFile = document.querySelector('#uploadFile')
+
+      let chunkSize = 2 * 1024 * 1024;
+
+      function upload(index) {
+        let file = btnFile.files[0];
+        if (!file) return;
+        let [fname, fext] = file.name.split('.');
+
+        let start = index * chunkSize;
+        if (start > file.size) {
+          merge(file.name)
+          return
+        }
+        let blob = file.slice(start, start + chunkSize);
+        let blobName = `${fname}.${index}.${fext}`;
+        let blobFile = new File([blob], blobName)
+        let formData = new FormData();
+        formData.append('file', blobFile);
+        axios.post('/upload', formData).then(res => {
+          upload(++index)
+        })
+      }
+
+      function merge(name) {
+        axios.post('/merge', {
+          name: name
+        }).then(res => {
+          console.log(res)
+        })
+      }
+    }
+
+    function main() {
+      for(key in axios) {
+        console.log(key, axios[key])
+      }
+      axiosTest();
+      fileUpload();
+    }
+
+    main();
+
+  </script>
+</body>
+
+</html>

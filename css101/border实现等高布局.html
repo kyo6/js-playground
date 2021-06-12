@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=., initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    .container {
+      margin: auto;
+      padding: 10px;
+      max-width: 600px;
+      overflow: hidden;
+    }
+
+    .box {
+      border-left: 150px solid #333;
+      background-color: #f0f3f9;
+    }
+
+    .box:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+
+    .box>nav {
+      width: 150px;
+      margin-left: -150px;
+      float: left;
+    }
+
+    /* 导航列表和模块列表 */
+    .nav {
+      line-height: 40px;
+      color: #fff;
+    }
+
+    .module {
+      line-height: 40px;
+    }
+
+    .left {
+      float: left;
+      width: 150px;
+    }
+
+    .cell {
+      display: table-cell;
+      width: 600px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <h1>border实现等高布局实例页面</h1>
+    <div class="show">
+      <h3>展示</h3>
+      <div class="demo">
+        <div class="container">
+          <div class="box">
+            <nav>
+              <h3 class="nav">导航1</h3>
+            </nav>
+            <section>
+              <div class="module">模块1</div>
+            </section>
+          </div>
+        </div>
+        <div class="container">
+          <div class="left">
+            <input type="button" id="navMore" value="更多导航">
+          </div>
+          <div class="cell">
+            <input type="button" id="moduleMore" value="更多模块">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    var navMore = document.getElementById('navMore'),
+    moduleMore = document.getElementById('moduleMore');
+    if(navMore && moduleMore) {
+      var nav = document.querySelector('nav'),
+      section = document.querySelector('section');
+      var navIndex = 1, sectionIndex = 1;
+      var rand = function() {
+        return 'f' + (Math.random() + '') .slice(-1);
+      };
+      navMore.onclick = function() {
+        navIndex++;
+        nav.insertAdjacentHTML('beforeEnd','<h3 class="nav">导航'+ navIndex +'</h3>');
+      };
+      moduleMore.onclick = function() {
+       sectionIndex++;
+       section.insertAdjacentHTML('beforeEnd',
+       '<div class="module" style="background:#'+ [rand(), rand(), rand()].join('') +'">模块'+ sectionIndex +'</div>');
+      };
+    }
+  </script>
+</body>
+</html>

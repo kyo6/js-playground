@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../../assets/css/main.css">
+  <style>
+    .container {
+      width: 660px;
+      margin: 0 auto;
+    }
+
+    .section {
+      margin-top: 50px;
+    }
+
+    .desc {
+      line-height: 1.6;
+      font-size: 18px;
+      font-weight: 200;
+      margin-bottom: 0;
+      text-align: left;
+    }
+
+    .section-title {
+      text-align: left;
+      background: none;
+      font-size: 28px;
+      color: #000;
+      font-weight: 600;
+      text-transform: capitalize;
+      line-height: 1.5;
+      border-bottom: 1px solid #ededed;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      grid-gap: 10px;
+      margin: 30px auto;
+      font: 1.4em Kameron, sans-serif;
+      text-align: left;
+    }
+
+    .grid-empty {
+      display: grid;
+      grid-template-rows: repeat(6, 100px);
+      grid-template-columns: repeat(3, 100px);
+      border: 5px solid rgb(198,164,154);
+      border-radius: 5px;
+    }
+    .grid-empty::after {
+       content: "";
+       padding: 20px;
+       border: 5px solid rgb(198,164,154);
+       background-color: rgba(198,164,154,.2);
+       border-radius: 5px;
+       grid-column: 2 / 4;
+       grid-row: 2;
+    }
+
+    .grid-border {
+       display: grid;
+       grid-template-columns: repeat(3,100px);
+       width: 302px;
+       grid-template-rows: repeat(3, 100px);
+       background-color: rgb(198,164,154);
+       grid-gap:1px;
+       border: 1px solid rgb(198,164,154);
+    }
+
+    .grid-border > * {
+      background-color: #fff;
+      padding: 20px;
+    }
+
+    .grid-border-one {
+      grid-column: 1/ -1;
+    }
+    .grid-border-two {
+      grid-row: 2/ -1;
+      grid-column: 1/ -2;
+    }
+
+    .min-max.grid {
+      grid-auto-rows: minmax(200px, auto);
+    }
+
+    .min-content.grid {
+      grid-template-columns: 1fr min-content;
+    }
+
+    .max-content.grid {
+      grid-template-columns: 1fr max-content;
+      grid-auto-rows: minmax(200px, auto);
+      overflow: scroll;
+    }
+    .grid-dense.grid {
+       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+       grid-auto-rows: minmax(100px, auto);
+       grid-auto-flow: dense;
+    }
+
+    .grid-dense.grid> *:nth-child(4n+1) {
+      grid-row: auto / span 2;
+    }
+
+    .grid-dense.grid> *:nth-child(3n+1) {
+      border: 5px solid rgb(214,129,137);
+      background-color: rgb(233,78,119);
+      color: #fff;
+      grid-column: auto / span 2;
+    }
+
+    .grid h1 {
+      font: 2.8em Sansita, sans-serif;
+      margin: 0;
+    }
+
+    .grid>* {
+      padding: 20px;
+      border: 5px solid rgb(198, 164, 154);
+      background-color: rgba(198, 164, 154, .2);
+      border-radius: 5px;
+    }
+
+    .three {
+      grid-column: 1 / 3;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <h1>网格轨道大小是否由内容来决定？</h1>
+    <div class="show" style="padding-top: 20px;padding-bottom: 20px;">
+      <div class="container">
+        <p class="explain desc">
+          网格中的项可以指定网格轨道大小。这里要记住的关键是，<code>一个单元格大小的改变将会改变整个轨道的大小</code>。如果你不希望这种情况发生，你可能需要一个单一维度的Flexbox布局。
+        </p>
+        <section class="section">
+          <h3 class="section-title">auto sized tracks</h3>
+          <p class="explain desc">一个自动大小的网格轨道将扩展到包含所有的内容。在下面的示例中，我有一个两列布局，在右边的列中添加更多的内容会导致整个行的扩展。第二行也是自动大小，再扩展以包含内容。
+          </p>
+          <pre>grid-template-columns: 1fr 2fr;</pre>
+          <div class="grid">
+            <div class="one">
+              <h1>auto</h1>
+            </div>
+            <div class="two">
+              Auto sized rows or columns will expand to take the amount of content that has been added to them. As the
+              default for a track is auto, many layouts will not need to specify rows in the explicit grid at all.
+            </div>
+            <div class="three">
+              Remember that any change to the size of a row or column happens right across the track!
+            </div>
+          </div>
+        </section>
+        <section  class="section">
+          <h3 class="section-title">minmax() track sizing</h3>
+          <p class="explain desc">
+            我们可以使用两个参数来控制网格轨道大小，例如创建一个最小的网格轨道，但其仍然会增长以适应较大的网格项目。我们可以使用minmax()函数来做这个。传给minmax()函数的第一个值，它是网格轨道最小的值，第二个值是网格轨道最大的值。因此，你可以设置200px的行，但通过auto设置为网格轨道最大值，那么当有较多的内容时，不会出现内容溢出。
+          </p>
+          <pre>grid-auto-rows: minmax(200px, auto);</pre>
+          <div class="grid min-max">
+            <div class="one">
+              <h1>minmax</h1>
+            </div>
+            <div class="two">
+              Auto sized rows or columns will expand to take the amount of content that has been added to them. As the
+              default for a track is auto, many layouts will not need to specify rows in the explicit grid at all. If you
+              want your track to have a minimum height or width then use minmax() to set a minimum size, with a maximum of
+              auto.
+            </div>
+            <div class="three">
+              Remember that any change to the size of a row or column happens right across the track!
+            </div>
+          </div>
+        </section>
+        <section class="section">
+          <h3 class="section-title">min-content sizing</h3>
+          <p class="explain desc">
+            也有一些有趣的关键词可以设置大小，将在以后的文章中对它们进行适当的阐述。<code>这些关键词在指定网格中允许内容来改变网格轨道大小，</code>并且可以在CSS内部和外部的大小模块（CSS Intrinsic and
+            Extrinsic
+            Sizing Module）中找到相关的详细内容。例如min-content关键词的示例，使用它创建一个网格轨道时，将会创建尽可能小的网格轨道。
+          </p>
+          <pre>grid-template-columns: 1fr min-content;</pre>
+          <div class="grid min-content">
+            <div class="one">
+              <h1>min-content</h1>
+            </div>
+            <div class="two">
+              A track sized as min-content will try to become as small as possible, taking all soft wrapping
+              opportunitiesaaaaaaaaaaaaaaaaaa.
+            </div>
+            <div class="three">
+              Remember that any change to the size of a row or column happens right across the track!
+            </div>
+          </div>
+        </section>
+        <section class="section">
+          <h3 class="section-title">max-content sizing</h3>
+          <p class="desc">相反，如果你使用的是max-content，你会得到一个尽可能大的网格轨道。这可能会导致溢出情况，在下面的示例中，<code>使用了overflow:
+            scroll设置了网格溢出，所以max-content的网格轨道会导致滚动条出现</code>。</p>
+          <pre>grid-template-columns: 1fr max-content;
+grid-auto-rows: minmax(200px, auto);
+overflow:scroll;</pre>
+          <div class="grid max-content">
+            <div class="one">
+              <h1>max-content</h1>
+            </div>
+            <div class="two">
+              A track sized as max-content will try to become as big as possible, which may lead to overflow situations.
+            </div>
+            <div class="three">
+              Remember that any change to the size of a row or column happens right across the track!
+            </div>
+          </div>
+        </section>
+        <p class="desc">
+          关键要记住的是，这将会发生在整个网格轨道上。你需要确保网格轨道的其他网格项目也能巧妙地吸收额外的空间。
+        </p>
+        <p class="desc">  
+          了解了如何对网格轨道大小进行调整，以及内容将如何改变网格轨道大小，这可能是新手使用CSS Grid布局中会感到最为困惑的事情之一。这需要花一点时间来理解 —— 我们之前没有任何类似的行为。这是理解事物如何运作的最好方法。
+        </p>
+        <section class="section">
+          <h3 class="section-title">Dense packing</h3>
+          <p class="desc">使用grid-auto-flow设置为dense，实现网格项目自动流的布局。这将导致网格项目从源程序中取出，并尝试在网格填充空白区域。
+</p>
+          <div class="grid grid-dense">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+            <div>7</div>
+            <div>8</div>
+            <div>9</div>
+            <div>10</div>
+          </div>
+          <p class="desc">
+            这并不是真正的瀑布流布局，因为我们仍然有一个网格（具有行和列），并且潜在的网格项目从源代码中移出。一个真正的瀑布流布局将使事物在源代码中工作。项目被推上去填充部分空间。它更像是在两个维度上做Flexbox布局</p>
+        </section>
+        <section class="section">
+          <h3 class="section-title"> Generated content to insert content to style backgrounds and borders</h3>
+          <p><strong> 如何向网格区域添加背景和边框?</strong></p>
+          <p class="desc">
+            一个网格尚未完成的问题，网格区域本身的背景和边框的样式。能在网格区域上直接添加背景和边框的样式吗？到目前是不可能的，如果要实现这样的一个效果需要插入一个元素或者添加一个伪元素来完成。
+          </p>
+          <div class="grid-empty"></div>
+          <p>有时候可以绕过背景和边框来实现，比如通过网格间距（grid-gap） —— 用一个1px来模拟背景或边框，比如下面的这个示例：</p>
+          <div class="grid-border">
+            <div class="grid-border-one">1</div>
+            <div class="grid-border-two">2</div>
+            <div class="grid-border-three">3</div>
+            <div class="grid-border-four">4</div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

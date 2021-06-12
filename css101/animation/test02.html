@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+    
+    .actions {
+      width: 100%;
+      padding: 3vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+  
+    button {
+      display: inline-flex;
+      align-items: center;
+      font-size: 1.2rem;
+      height: 3rem;
+      padding: 0.2rem 3.2rem;
+      color: rgba(255, 255, 255, 0.8);
+      background: #ff3366;
+      border-radius: 10rem;
+      border: none;
+      cursor: pointer;
+      margin: 0 2vh;
+      transition: all 1s ease-in;
+      transform-origin: center;
+    }
+
+    button:hover {
+      box-shadow: inset 0 0 3px 5px currentColor;
+      transform: rotate(2deg) skew(1deg, -1deg);
+    }
+
+    button:nth-child(2) {
+      background-color: #2196f3;
+    }
+
+    button:nth-child(3) {
+      background-color: #ff9800;
+    }
+
+    button:nth-child(4) {
+      background-color: #795548;
+    }
+
+    .ball {
+      position: absolute;
+      height: 80px;
+      width: 80px;
+      border-radius: 50%;
+      background:
+      url("https://lh6.googleusercontent.com/-EHKsMyJ4Odg/VInMm3ZiLDI/AAAAAAAAAN0/AELrJLAfABU/s555-no/tao-hieu-ung-qua-bong-lan-bang-css3-animation.png")
+      no-repeat center;
+      background-size: cover;
+      box-shadow: inset -10px -10px 10px rgba(0, 0, 0, 0.6);
+      top: 0px;
+      transform: scale(1, 1);
+    }
+
+    .ball__shadow {
+      margin-top: 120px;
+      margin-left: -8px;
+      height: 100px;
+      width: 100px;
+      background-color: rgba(0, 0, 0, 0.6);
+      filter: blur(8px);
+      border-radius: 50px;
+      transform: scale(0.4, 0.1);
+      opacity: 0.3;
+    }
+
+   .ball__container {
+      position: absolute;
+      height: 200px;
+      width: 82px;
+      transform: translateX(0);
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="ball__container">
+      <div class="ball__shadow"></div>
+      <div class="ball"></div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button id="play">Play</button>
+    <button id="pause">Pause</button>
+    <button id="reverse">Reverse</button>
+  </div>
+
+  <script>
+    const ball = document.querySelector(".ball");
+    const ballShadow = document.querySelector(".ball__shadow");
+    const ballContainer = document.querySelector(".ball__container");
+
+    const handlePlay = document.getElementById("play");
+    const handlePause = document.getElementById("pause");
+    const handleReverse = document.getElementById("reverse");
+
+    const moveItKeyframesEffect = [
+      {
+        transform: "translateX(0)"
+      },
+      {
+        transform: "translateX(100vw)"
+      }
+    ];
+    
+    const moveItOptions = {
+      duration: 8000,
+      direction: "alternate",
+      easing: "linear",
+      iterations: Infinity
+    };
+
+    const scaleItKeyframesEffect = [
+      { transform: "scale(0.4, 0.1)", opacity: 0.3 },
+      { transform: "scale(1, 0.2)" }
+    ];
+
+    const scaleItOptions = {
+      duration: 500,
+      direction: "alternate",
+      easing: "cubic-bezier(.5,0,1,.5)",
+      iterations: Infinity
+    };
+
+    const bounceKeyframesEffect = [
+      { top: "0px", transform: "scale(1, 1)" },
+      { transform: "scale(0.85, 1)", offset: 0.8 },
+      { top: "120px", transform: "scale(1.2,0.6)" }
+    ];
+
+    const bounceOptions = {
+      duration: 500,
+      direction: "alternate",
+      easing: "cubic-bezier(.5,0,1,.5)",
+      iterations: Infinity
+    };
+    const ballContainerAni = ballContainer.animate(moveItKeyframesEffect,moveItOptions);
+    const ballShadowAni = ballShadow.animate(scaleItKeyframesEffect,scaleItOptions);
+    const ballAni = ball.animate(bounceKeyframesEffect, bounceOptions);
+    handlePlay.addEventListener("click", () => {
+      ballContainerAni.play();
+      ballShadowAni.play();
+      ballAni.play();
+    });
+
+    handlePause.addEventListener("click", () => {
+      ballContainerAni.pause();
+      ballShadowAni.pause();
+      ballAni.pause();
+    });
+
+    handleReverse.addEventListener("click", () => {
+      ballContainerAni.reverse();
+      ballShadowAni.reverse();
+      ballAni.reverse();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Helvetica, sans-serif;
+    }
+
+    button {
+      background-color: dodgerblue;
+      border-color: dodgerblue;
+      color: aliceblue;
+      border-radius: 4px;
+      padding: .2em .35em;
+      font-size: 18px;
+    }
+
+    pre {
+      font-family: 'Courier New', Courier, monospace;
+      background-color: antiquewhite;
+      padding: 16px;
+      max-width: 600px;
+      line-height: 1.5;
+    }
+
+    .demo {
+      padding: 32px;
+    }
+
+    .mt-40 {
+      margin-top: 40px;
+    }
+
+    .ml-48 {
+      margin-left: 48px;
+    }
+
+    .green {
+      background-color: rgb(126, 228, 126);
+    }
+
+    .pink {
+      background-color: pink;
+    }
+
+    .console {
+      display: inline-block;
+      width: 300px;
+      height: 300px;
+      border: 1px dashed gray;
+      padding: 16px;
+      line-height: 2;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="demo">
+
+    <h3>Click Button to see Console</h3>
+    <button id="button">Click</button>
+    <p>The Code:</p>
+    <pre>
+button.addEventListener('click', () => {
+  Promise.resolve().then(() => {
+    console.log('MicroTask 1')
+  })
+  console.log('Listener 1')
+})
+button.addEventListener('click', () => {
+  Promise.resolve().then(() => {
+    console.log('MicroTask 2')
+  })
+  console.log('Listener 2')
+}) 
+          </pre>
+          <p>The Result:</p>
+    <div class="row">
+      <div class="console green">
+        <div>当用户点击按钮是会输出：</div>
+        Listener 1 <br>
+        MicroTask 1 <br>
+        Listener 2 <br>
+        MicroTask 2 <br>
+      </div>
+      <div class="console ml-48 pink">
+        <div>当执行Js Script是会输出：</div>
+        Listener 1 <br>
+        Listener 2 <br>
+        MicroTask 1 <br>
+        MicroTask 2 <br>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    var button = document.querySelector('#button');
+    button.addEventListener('click', () => {
+      Promise.resolve().then(() => {
+        console.log('MicroTask 1')
+      })
+      console.log('Listener 1')
+    })
+    button.addEventListener('click', () => {
+      Promise.resolve().then(() => {
+        console.log('MicroTask 2')
+      })
+      console.log('Listener 2')
+    })
+    button.click();
+
+  </script>
+</body>
+
+</html>

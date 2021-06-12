@@ -76,6 +76,21 @@ function copyPlus(target, map=new WeakMap()) {
   }
 }
 
+function objectToTree(data) {
+  const res = [];
+  if(typeof data === 'object' && data !== null) {
+    Object.keys(data).forEach(key => {
+      if(typeof data[key] === 'object') {
+        const children = objectToTree(data[key])
+        res.push({label:`${key}: {}`, children})
+      } else {
+        res.push({label: `${key}: ${data[key]}`})
+      }
+    })
+  }
+  return res;
+}
+
 console.time();
 let c1 = copyPlus(target);
 console.timeEnd();

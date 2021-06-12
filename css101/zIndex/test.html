@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      display: flex;
+    }
+
+    .parent {
+      width: 200px;
+      height: 100px;
+      background-color: #168bf5;
+      z-index: 1;
+    }
+
+    .child {
+      width: 100px;
+      height: 200px;
+      background: #32d19c;
+      position: relative;
+      z-index: -1;
+    }
+
+    .container {
+      background-color: #666;
+      position: relative;
+      z-index: 0;
+    }
+
+    .page {
+      width: 600px;
+      height: 300px;
+      background-color: #f4f39e;
+      position: relative;
+    }
+
+    /* 边角卷边阴影 */
+    .page:before,
+    .page:after {
+      content: "";
+      width: 90%;
+      height: 20%;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, .3);
+      position: absolute;
+      z-index: -1;
+    }
+
+    /* 边角卷边阴影定位和角度控制 */
+    .page:before {
+      transform: skew(-15deg) rotate(-5deg);
+      transform-origin: left bottom;
+      left:0;
+      bottom: 0;
+    }
+
+    .page::after {
+      transform: skew(15deg) rotate(5deg);
+      transform-origin: left bottom;
+      left:0;
+      bottom: 0; 
+    }
+
+  </style>
+</head>
+
+<body>
+  <h2>css3中属性生成层叠上下文与层叠顺序的运用</h2>
+  <p></p>
+  <div class="demo">
+    <div class="box">
+      parent
+      <div class="parent">
+        <div class="child">child</div>
+      </div>
+    </div>
+  </div>
+  <div class="demo">
+    <div class="container">
+      <div class="page">
+        这是一段文字.......
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

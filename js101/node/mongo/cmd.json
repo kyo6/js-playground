@@ -1,0 +1,5 @@
+[{
+"name":"ls",
+"params":[{"param":"-a", "content":"显示所有文件及目录"}],
+"usage":["ls [选项] [文件]"]
+}]

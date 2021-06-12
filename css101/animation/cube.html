@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  .demo {
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cube {
+    position: relative;
+    transform: perspective(500px);
+    transform-style: preserve-3d;
+    /* transform-origin: center; */
+  }
+
+  .cube > div {
+    width: 146px;
+    height: 146px;
+    border: 2px solid #555555;
+    position: absolute;
+  }
+
+  .front {
+    background: rgba(255, 0, 0, 0.5);
+    transform: rotateY(0deg) translateZ(75px);
+  }
+
+  .back {
+    background: rgba(255, 255, 0, 0.5);
+    transform: rotateX(180deg) translateZ(75px);
+  }
+
+  .right {
+    background: rgba(0, 255, 0, 0.5);
+    transform: rotateY(90deg) translateZ(75px);
+  }
+
+  .left {
+    background: rgba(0, 255, 255, 0.5);
+    transform: rotateY(-90deg) translateZ(75px);
+  }
+
+  .top {
+    background: rgba(0, 0, 255, 0.5);
+    transform: rotateX(90deg) translateZ(75px);
+  }
+
+  .bottom {
+    background: rgba(255, 0, 255, 0.5);
+    transform: rotateX(-90deg) translateZ(75px);
+  }
+</style>
+<body>
+  <div class="demo">
+    <div class="cube">
+      <div class="front"></div>
+      <div class="back"></div>
+      <div class="top"></div>
+      <div class="bottom"></div>
+      <div class="left"></div>
+      <div class="right"></div>
+    </div>
+  </div>
+</body>
+</html>

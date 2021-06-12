@@ -6,9 +6,9 @@
 
 function heap_sort(arr, n) {
   build_heap(arr);
-  for (let i = n - 1; i > 0; i--) {
-    swap(arr, 0, i);
-    heapify(arr, 0, i);
+  for (let len = n - 1; len > 0; len--) {
+    swap(arr, 0, len);
+    heapify(arr, 0, len);
   }
 }
 

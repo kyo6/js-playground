@@ -1,12 +1,18 @@
 var s1 = "get-element-by-id";
 
+//Convert kebab-case to PascalCase 
 function convertName(s) {
-  return s.replace(/-\w/g, function (x) {
-    return x.slice(1).toUpperCase();
+  return s.replace(/-\w/g, function (match) {
+    return match.slice(1).toUpperCase();
   });
 }
 const newName = convertName(s1);
 console.log(newName);
+
+// Convert PascalCase to kebab-case
+function hyphenate(str) {
+  return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+}
 
 function findMax() {
   let str = "abcabcabcbbccccc";
@@ -19,9 +25,9 @@ function findMax() {
 
   // 定义正则表达式
   let re = /(\w)\1+/g;
-  str.replace(re, ($0, $1) => {
-    if (num < $0.length) {
-      num = $0.length;
+  str.replace(re, (match, $1) => {
+    if (num < match.length) {
+      num = match.length;
       char = $1;
     }
   });
@@ -45,20 +51,20 @@ function isContain(a, b) {
   return -1;
 }
 
-let a1='34', b1='1234567'; // 返回 2
-let a2='35', b2='1234567'; // 返回 -1
-let a3='355', b3='12354355'; // 返回 5
-isContain(a,b);
-
+let a1 = "34",
+  b1 = "1234567"; // 返回 2
+let a2 = "35",
+  b2 = "1234567"; // 返回 -1
+let a3 = "355",
+  b3 = "12354355"; // 返回 5
+isContain(a, b);
 
 function parseToMoney(num) {
   num = parseFloat(num.toFixed(3));
-  let [integer, decimal] = String.prototype.split.call(num, '.');
-  integer = integer.replace(/\d(?=(\d{3})+$)/g, '$&,');
-  return integer + '.' + (decimal ? decimal : '');
+  let [integer, decimal] = String.prototype.split.call(num, ".");
+  integer = integer.replace(/\d(?=(\d{3})+$)/g, "$&,"); //// $& means the whole matched string
+  return integer + "." + (decimal ? decimal : "");
 }
 parseToMoney(1234.56); // return '1,234.56'
 parseToMoney(123456789); // return '123,456,789'
-parseToMoney(1087654.321); // return '1,087,654.321'
-
-
+parseToMoney(10087654.321); // return '1,087,654.321'

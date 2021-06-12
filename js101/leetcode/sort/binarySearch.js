@@ -30,7 +30,7 @@ function left_bound(nums, target) {
       right = mid
     } else if (nums[mid] < target) {
       left = mid + 1;
-    } else if (nums[i] > target) {
+    } else if (nums[mid] > target) {
       right = mid
     }
   }
@@ -38,8 +38,9 @@ function left_bound(nums, target) {
   // target 比所有数都大
   if (left == nums.length) return -1;
   // 类似之前算法的处理方式
-  return nums[left] == target ? left : -1;
+  let res = nums[left] == target ? left : -1;
+  return res;
 }
 
-const nums = [2, 5, 3, 7], target = 9;
+const nums = [2, 3, 5, 7], target = 4;
 left_bound(nums, target);

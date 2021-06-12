@@ -1,4 +1,4 @@
-// js 洗牌算法
+
 function order(arr) {
  let cloneArray = arr.concat();
  let len = cloneArray.length;

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>minWidthFlex</title>
+  <link rel="stylesheet" href="assets/css/normalize.css">
+  <style>
+    ul{list-style: none; padding: 0;}
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 auto;
+    }
+    body {
+      background: #fafafa;
+      line-height: 1.5;
+      font-family: 'Arial';
+      padding: 1rem;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    .pt-30 {
+      padding-top: 30px;
+    }
+    .wrapper {
+    max-width: 700px;
+    margin: auto;
+    }
+    .c-person {
+      min-width: 0;
+      flex: 1 1 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #eee;
+      padding: 1rem;
+      border-radius: 10px;
+    }
+    .c-person:not(:last-child) {
+      margin-bottom: 0.5rem;
+    }
+    .c-person h3 {
+    flex-grow: 2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    }
+    .c-person__avatar {
+    flex: 0 0 50px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    }
+    .c-person .c-link {
+    min-width: 120px;
+    margin-left: auto;
+    text-align: end;
+    }
+    .c-link svg {
+    vertical-align: middle;
+    }
+
+    .c-tag-wrapper li {
+      margin-bottom: 0.7rem;
+      margin-right: 0.7rem;
+    }
+    .c-tag {
+    display: inline-block;
+    background: #755ac3;
+    min-width: 100px;
+    max-width: 250px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 0.35rem 1rem;
+    color: #fff;
+    border-radius: 100px;
+    text-decoration: none;
+    text-align: center;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.15);
+    }
+
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+
+    <ul class="wrapper c-tag-wrapper pt-30">
+      <li><a href="#" class="c-tag">Design</a></li>
+      <li><a href="#" class="c-tag">Development</a></li>
+      <li><a href="#" class="c-tag">CSS</a></li>
+      <li><a href="#" class="c-tag">Code</a></li>
+      <li><a href="#" class="c-tag">Drawing</a></li>
+      <li><a href="#" class="c-tag">User Experience Design Design Design Design</a></li>
+      <li><a href="#" class="c-tag">Service Workers</a></li>
+      <li><a href="#" class="c-tag">Performance</a></li>
+    </ul>
+
+
+
+
+    <h3>
+      使用 flexbox 将最小宽度设置为零
+    </h3>
+    <p> <code>min-width</code>的默认值是 <code>auto</code>，它被计算为0。当一个元素是一个flex项时，min-width的值不会计算为零。flex 项目的最小大小等于其内容的大小。</p>
+    <blockquote>
+      默认情况下，flex项目不会缩小到它们的最小内容大小(最长单词或固定大小元素的长度)以下。要更改此设置，请设置min-width或 min-height属性。
+    </blockquote>
+   
+  <ul class="">
+    <li class="c-person">
+      <img class="c-person__avatar" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/182774/shadeed_copy_copy.jpg"
+        alt="">
+      <h3>AhmakdsodsdksosokokdoksdkosokdsokdoskokdsokdokodkseAhmakdsodsdksosokokdoksdkosokdsokdoskokdsokdokodksedd</h3>
+      <a href="#" class="c-link">
+        <span>View more</span>
+        <svg width="24" height="24" viewBox="0 0 24 24">
+          <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
+        </svg>
+      </a>
+    </li>
+    <li class="c-person">
+      <img class="c-person__avatar" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/182774/shadeed_copy_copy.jpg"
+        alt="">
+      <h3>Ahmad Shadeed</h3>
+      <a href="#" class="c-link">
+        <span>View more</span>
+        <svg width="24" height="24" viewBox="0 0 24 24">
+          <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
+        </svg>
+      </a>
+    </li>
+    <li class="c-person">
+      <img class="c-person__avatar" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/182774/shadeed_copy_copy.jpg"
+        alt="">
+      <h3>Ahmad Shadeed</h3>
+      <a href="#" class="c-link">
+        <span>View more</span>
+        <svg width="24" height="24" viewBox="0 0 24 24">
+          <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
+        </svg>
+      </a>
+    </li>
+    <li class="c-person">
+      <img class="c-person__avatar" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/182774/shadeed_copy_copy.jpg"
+        alt="">
+      <h3>Ahmad Shadeed</h3>
+      <a href="#" class="c-link">
+        <span>View more</span>
+        <svg width="24" height="24" viewBox="0 0 24 24">
+          <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path>
+        </svg>
+      </a>
+    </li>
+  </ul>
+  </div>
+</body>
+</html>

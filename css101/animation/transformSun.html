@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  :root {
+    --orbitWith: 600px;
+    --sunWidth:120px;
+    --ballRadius: 30px;
+  }
+
+  body {
+    margin: 0;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+
+  .orbital {
+    position: relative;
+    width: var(--orbitWith);
+    height: var(--orbitWith);
+    border-radius: 50%;
+    border: 1px dashed gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sun {
+    width: var(--sunWidth);
+    height: var(--sunWidth);
+    background-color: rgb(248, 107, 35);
+    border-radius: 50%;
+    box-shadow: 5px 5px 10px rgb(248, 107, 35), -5px -5px 10px rgb(248, 107, 35),
+    -5px 5px 10px rgb(248, 107, 35), 5px -5px 10px rgb(248, 107, 35);
+  }
+
+  .ball {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    top: -30px;
+    left: 270px;
+    background-color: antiquewhite;
+    transform-origin: center 330px;
+    animation: rotate 10s infinite linear;
+  }
+
+
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+</style>
+
+<body>
+  <div class="orbital">
+    <div class="sun"></div>
+    <div class="ball"></div>
+  </div>
+</body>
+<script>
+</script>
+
+</html>

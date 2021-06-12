@@ -10,20 +10,27 @@ function ajax(options) {
     error: function () {},
   };
   options = { ...defaults, ...options };
+
+  // 封装 params 参数
+  var params = "";
+  for (var attr in options.data) {
+    params += arr + "=" + options.data[attr] + "&";
+  }
+  params = params.substring(0, params.length - 1);
+
+  // 返回一个Promise 对象
   return new Promise((resolve, reject) => {
+    // 1.执行异步 ajax 请求
+    //创建xhr对象
     var xhr;
     if (window.XMLHttpRequest) {
       xhr = new XMLHttpRequest();
     } else {
       xhr = new ActiveXObject("Microsoft.XMLHTTP");
     }
-    var params = "";
-    for (var attr in options.data) {
-      params += arr + "=" + options.data[attr] + "&";
-    }
-    params = params.substring(0, params.length - 1);
+    // 打开连接（初始化请求，没有发送请求）
     xhr.open(options.method, options.url);
-
+    // 发送请求
     if (options.type == "post") {
       var ContentType = defaults.header["Content-Type"];
       //设置post 请求头

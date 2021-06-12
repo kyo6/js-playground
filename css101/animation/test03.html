@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+    width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #291642;
+    font-family: "Gochi Hand", sans-serif;
+    font-size: 100%;
+    letter-spacing: 0.1rem;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(to right, #44ea76 0%, #39fad7 80%, #39fad7 100%)
+    no-repeat,
+    url("https://lh4.googleusercontent.com/-3eBjuQpOGFw/U47yh_-OycI/AAAAAAAAI2U/uaU5pK49N1w/s1600/normal.jpg")
+    no-repeat fixed;
+    background-size: cover;
+    background-blend-mode: hue;
+    }
+
+    .container {
+    inline-size: 30vw;
+    border-radius: 5px;
+    margin: 0 1vh;
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+    transition: box-shadow 0.3s ease;
+
+    background-image: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0.5)
+    );
+    backdrop-filter: blur(3px);
+
+    min-block-size: 50vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    color: #212121;
+    padding: 2vh;
+    }
+
+    h3 {
+    margin-top: 2vh;
+    }
+
+    .box {
+    width: 20vh;
+    height: 20vh;
+    background-color: #ff5722;
+    border-radius: 100%;
+    cursor: pointer;
+    transform-origin: center;
+    margin: auto;
+    }
+
+    @keyframes boxScale {
+    to {
+    transform: scale(1.5, 1.5);
+    }
+    }
+
+    .box.animation {
+    animation: boxScale 2s linear infinite alternate;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h3>CSS Animation</h3>
+    <div class="box animation"></div>
+  </div>
+
+  <div class="container">
+    <h3>Web Animation API</h3>
+    <div class="box waapi"></div>
+  </div>
+
+  <script>
+    const aniElement = document.querySelector(".waapi");
+
+    const keyframes = [
+    { transform: "scale(1, 1)" },
+    { transform: "scale(1.5, 1.5)" }
+    ];
+
+    const options = {
+    duration: 2000,
+    iterations: Infinity,
+    easing: "linear",
+    direction: "alternate"
+    };
+
+    aniElement.animate(keyframes, options);
+  </script>
+</body>
+</html>

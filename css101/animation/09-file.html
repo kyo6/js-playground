@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <style>
+   
+
+    .container {
+      width: 200px;
+      height: 200px;
+      position: relative;
+      /* background-color: #fafafa; */
+    }
+
+    .container div {
+      width: 40%;
+      height: 40%;
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    img {
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .intro .container div:nth-child(2) {
+      transform: translate(150%);
+    }
+
+    .intro .container div:nth-child(3) {
+      transform: translate(150%, 150%);
+    }
+
+    .intro .container div:nth-child(4) {
+      transform: translate(0, 150%);
+    }
+
+    .demo a {
+      color: bisque;
+    }
+
+
+    .demo .container div {
+      animation: loading 2s ease infinite;
+    }
+
+    .container div:nth-child(1) {
+      background-color: #C299FC;
+      animation-delay: 0;
+    }
+
+    .container div:nth-child(2) {
+      background-color: #FFD739;
+      animation-delay: -0.5s;
+    }
+
+    .container div:nth-child(3) {
+      background-color: #9852F9;
+      animation-delay: -1s;
+    }
+
+    .container div:nth-child(4) {
+      background-color: #6807F9;
+      animation-delay: -1.5s;
+    }
+
+
+    @keyframes loading {
+
+      0%,
+      100% {
+        transform: translate(0, 0);
+      }
+
+      25% {
+        transform: translate(150%, 0);
+      }
+
+      50% {
+        transform: translate(150%, 150%);
+      }
+
+      75% {
+        transform: translate(0, 150%);
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="intro center">
+    <div class="intro-container">
+      <h1>Using object URLs to display images</h1>
+      <p>This example uses object URLs to display image thumbnails. In addition, it displays other file information
+        including their names and sizes.
+      </p>
+
+      <h3>知识点</h3>
+      <ul>
+        <li>Set the image's source to a new object URL representing the file, using <code>URL.createObjectURL()</code> to
+            create the blob URL.</li>
+        <li>Set up the image's load event handler to release the object URL since it's no longer needed once the image
+          has been loaded. This is done by calling the <code>URL.revokeObjectURL() </code>method and passing in the object URL string
+          as</li>
+      </ul>
+      <h3>代码</h3>
+      <pre>
+&lt;input type=&quot;file&quot; id=&quot;fileElem&quot; multiple accept=&quot;image/*&quot;
+style=&quot;display:none&quot;&gt;
+&lt;a href=&quot;#&quot; id=&quot;fileSelect&quot;&gt;Select some files&lt;/a&gt;
+&lt;div id=&quot;fileList&quot;&gt;
+&lt;p&gt;No files selected!&lt;/p&gt;
+&lt;/div&gt;
+      </pre>
+    </div>
+  </div>
+  <div class="demo center">
+    <input type="file" id="fileElem" multiple accept="*" style="display:none">
+    <a href="#" id="fileSelect">Select some files</a>
+    <div id="fileList">
+      <p>No files selected!</p>
+    </div>
+  </div>
+
+  <script>
+    const fileSelect = document.getElementById("fileSelect"),
+      fileElem = document.getElementById("fileElem"),
+      videoElem = document.getElementById("videoElem"),
+      fileList = document.getElementById("fileList");
+
+    fileSelect.addEventListener("click", function (e) {
+      if (fileElem) {
+        fileElem.click();
+      }
+      e.preventDefault(); // prevent navigation to "#"
+    }, false);
+
+    fileElem.addEventListener('change', handleFiles, false);
+
+
+    function handleExcel() {
+      if(this.files.length) {
+        const file = this.files[0];
+        const reader = new FileReader();
+        reader.readAsBinaryString(file);
+        reader.onload = function(e) {
+          console.log(e.target.result)
+        }
+      }
+    }
+
+    function handleFiles() {
+      if (!this.files.length) {
+        fileList.innerHTML = "<p>No files selected!</p>";
+      } else {
+        fileList.innerHTML = "";
+        const list = document.createElement("ul");
+        fileList.appendChild(list);
+        for(let i = 0; i < this.files.length;i++) {
+          let li = document.createElement('li');
+          list.appendChild(li);
+
+          // let img = document.createElement('img');
+          // img.src = URL.createObjectURL(this.files[i]);
+          // console.log(img.src);
+          // img.height = 160;
+          // img.onload = function() {
+          //   URL.revokeObjectURL(this.src);
+          // }
+
+          const obj_url = URL.createObjectURL(this.files[i]);
+          createDownload('下载视频', obj_url)
+          let video = document.createElement('video');
+          video.src = obj_url;
+          video.width = 300;
+          video.controls = true;
+          // video.onload = function() {
+          //  URL.revokeObjectURL(this.src);
+          // }
+          //video.play();
+          li.appendChild(video);
+          const info = document.createElement("span");
+          info.innerHTML = this.files[i].name + ": " + this.files[i].size + " bytes";
+          li.appendChild(info);
+          
+        }
+      }
+    }
+
+    function createDownload(fileName, url){
+      //var blob = new Blob([content], {type});
+      var link = document.createElement("a");
+      link.innerHTML = fileName;
+      link.download = fileName;
+      //link.href = URL.createObjectURL(blob);
+      link.href = url;
+      document.getElementsByTagName("body")[0].appendChild(link);
+    }
+
+  </script>
+
+</body>
+
+</html>

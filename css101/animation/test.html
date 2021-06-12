@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style> 
+  html,body {
+    height: 100%;
+  }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center
+  }  
+  .container {
+    width: 400px;
+    height: 300px;
+  }
+  .box {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    background-color: pink;
+    border-radius: 50%;
+  }
+
+  .box:hover .layer-1 {
+    transform: translate(-15px, -100px)
+  }
+
+  .box:hover .layer-2 {
+    transform: translate(0px, -60px);
+  }
+
+  .box:hover .layer-3 {
+    transform: translate(85px, -15px);
+  }
+
+  .box:hover .layer-4 {
+    transform: translate(125px, 0px);
+  }
+
+
+  .layer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    transform-origin: 50% 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    transition: all 0.25s linear;
+  }
+
+  .layer-1 {
+    /* transform: translate(0%, -100px); */
+    background-color: yellow;
+  }
+
+  .layer-2 {
+    background-color: bisque;
+     /* transform: translate(40px, -80px); */
+  }
+
+  .layer-3 {
+    background-color: cornflowerblue;
+  }
+
+  .layer-4 {
+    background-color: rgb(237, 205, 100);
+  }
+
+  .layer-5 {
+   background-color: rgb(237, 100, 100);
+  }
+
+  .layer-6 {
+   background-color: rgb(237, 100, 196);
+  }
+  </style> 
+</head>
+<body>
+  <div class="container">
+    <div class="box">
+      <div class="layer layer-1"></div>
+      <div class="layer layer-2"></div>
+      <div class="layer layer-3"></div>
+      <div class="layer layer-4"></div>
+      <div class="layer layer-5"></div>
+      <div class="layer layer-6"></div>
+    </div>
+  </div>
+</body>
+</html>
